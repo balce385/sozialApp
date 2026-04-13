@@ -36,14 +36,17 @@ function renderMarkdown(text) {
 }
 
 // Ladebutton-Zustand
-function setLaden(btnId, laden, text = '') {
+function setLaden(btnId, laden, origText = '') {
   const btn = document.getElementById(btnId);
   if (!btn) return;
-  btn.disabled = laden;
-  btn.innerHTML = laden
-    ? `<span class="spinner"></span> Wird verarbeitet…`
-    : text || btn.dataset.origText || btn.innerHTML;
-  if (!laden && text) btn.dataset.origText = text;
+  if (laden) {
+    btn.dataset.origText = origText || btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Wird verarbeitet…';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = origText || btn.dataset.origText || btn.innerHTML;
+  }
 }
 
 // ── TAB-NAVIGATION ─────────────────────────────────────────────────────────
@@ -424,7 +427,7 @@ async function formulierungshilfe() {
       method: 'POST',
       body: JSON.stringify({ text, modus })
     });
-    document.getElementById('formul-output').textContent = daten.ergebnis;
+    document.getElementById('formul-output').innerHTML = renderMarkdown(daten.ergebnis);
     document.getElementById('formul-result').style.display = 'block';
   } catch (err) {
     alert('KI-Fehler: ' + err.message);
