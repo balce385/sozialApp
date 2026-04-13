@@ -1,11 +1,12 @@
 const express = require('express');
-const router = express.Router();
-const Anthropic = require('@anthropic-ai/sdk');
+const router  = express.Router();
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const auth = require('../middleware/auth');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+// Gemini – kostenlos via Google AI Studio (aistudio.google.com)
+// Modell: gemini-1.5-flash (1500 Anfragen/Tag gratis, kein Kreditkarte nötig)
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// System-Prompt wird für alle Anfragen gecacht (spart Token-Kosten)
 const SYSTEM_PROMPT = `Du bist ein akademischer Assistent, spezialisiert auf Soziale Arbeit (Social Work).
 Du unterstützt Studierende der Sozialen Arbeit in Deutschland bei ihrer akademischen Arbeit.
 
@@ -23,6 +24,14 @@ Regeln:
 - Beachte stets den Datenschutz: keine realen Personendaten verwenden
 - Bei ethisch kritischen Anfragen auf professionelle Grenzen hinweisen
 - Verwende korrekte Fachbegriffe der Sozialen Arbeit`;
+
+// Hilfsfunktion: Gemini-Modell mit System-Prompt laden
+function ladeModell() {
+  return genAI.getGenerativeModel({
+    model: 'gemini-1.5-flash',
+    systemInstruction: SYSTEM_PROMPT
+  });
+}
 
 // ── FORMULIERUNGSHILFE ─────────────────────────────────────────────────────
 // POST /api/ai/formulierung
@@ -46,18 +55,15 @@ router.post('/formulierung', auth, async (req, res) => {
   };
 
   const anweisung = anweisungen[modus] || anweisungen.verbessern;
+  const prompt = `${anweisung}\n\n---\n${text.trim()}\n---\n\nGib nur den überarbeiteten Text zurück, ohne Erklärungen.`;
 
   try {
-    const nachricht = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1500,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: `${anweisung}\n\n---\n${text.trim()}\n---\n\nGib nur den überarbeiteten Text zurück, ohne Erklärungen.` }]
-    });
-
-    res.json({ ergebnis: nachricht.content[0].text });
+    const modell  = ladeModell();
+    const result  = await modell.generateContent(prompt);
+    const ergebnis = result.response.text();
+    res.json({ ergebnis });
   } catch (err) {
-    console.error('Claude API Fehler:', err.message);
+    console.error('Gemini API Fehler:', err.message);
     res.status(500).json({ msg: 'KI-Fehler: ' + err.message });
   }
 });
@@ -101,25 +107,21 @@ Relevante Gesetze und Paragraphen (SGB, KJSG etc.).
 Priorisierte Handlungsschritte für den Einstieg.`;
 
   try {
-    const nachricht = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2000,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: prompt }]
-    });
-
-    res.json({ analyse: nachricht.content[0].text });
+    const modell  = ladeModell();
+    const result  = await modell.generateContent(prompt);
+    const analyse = result.response.text();
+    res.json({ analyse });
   } catch (err) {
-    console.error('Claude API Fehler:', err.message);
+    console.error('Gemini API Fehler:', err.message);
     res.status(500).json({ msg: 'KI-Fehler: ' + err.message });
   }
 });
 
 // ── RECHERCHEHILFE ─────────────────────────────────────────────────────────
 // POST /api/ai/recherche
-// Body: { frage, kontext?, sprache? }
+// Body: { frage, kontext? }
 router.post('/recherche', auth, async (req, res) => {
-  const { frage, kontext, sprache = 'de' } = req.body;
+  const { frage, kontext } = req.body;
 
   if (!frage || !frage.trim()) {
     return res.status(400).json({ msg: 'Eine Frage ist erforderlich' });
@@ -145,16 +147,12 @@ Schlüsselbegriffe für die weitere Recherche.
 Konkrete Empfehlungen wo und wie weiterrecherchieren (kostenlose Datenbanken bevorzugen: SSOAR, OpenAlex, BASE, DOAJ, DZI SoLit).`;
 
   try {
-    const nachricht = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1500,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: prompt }]
-    });
-
-    res.json({ antwort: nachricht.content[0].text });
+    const modell  = ladeModell();
+    const result  = await modell.generateContent(prompt);
+    const antwort = result.response.text();
+    res.json({ antwort });
   } catch (err) {
-    console.error('Claude API Fehler:', err.message);
+    console.error('Gemini API Fehler:', err.message);
     res.status(500).json({ msg: 'KI-Fehler: ' + err.message });
   }
 });
@@ -172,22 +170,20 @@ router.post('/chat', auth, async (req, res) => {
     return res.status(400).json({ msg: 'Gesprächsverlauf zu lang (max. 20 Nachrichten)' });
   }
 
-  const nachrichten = [
-    ...verlauf.map(v => ({ role: v.role, content: v.content })),
-    { role: 'user', content: nachricht.trim() }
-  ];
+  // Gemini verwendet 'model' statt 'assistant' für den Assistenten
+  const verlaufGemini = verlauf.map(v => ({
+    role:  v.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: v.content }]
+  }));
 
   try {
-    const antwort = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1000,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: nachrichten
-    });
-
-    res.json({ antwort: antwort.content[0].text });
+    const modell = ladeModell();
+    const chat   = modell.startChat({ history: verlaufGemini });
+    const result = await chat.sendMessage(nachricht.trim());
+    const antwort = result.response.text();
+    res.json({ antwort });
   } catch (err) {
-    console.error('Claude API Fehler:', err.message);
+    console.error('Gemini API Fehler:', err.message);
     res.status(500).json({ msg: 'KI-Fehler: ' + err.message });
   }
 });

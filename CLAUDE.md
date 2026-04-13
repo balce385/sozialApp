@@ -10,7 +10,7 @@ Diese Datei dient als vollständiger Leitfaden für KI-Assistenten, die an diese
 
 - **Sozialen Feed** — Beiträge, Likes, Kommentare, Follow-System
 - **Wissenschaftliche Recherche** — Direkte Suche in OpenAlex, Semantic Scholar und CrossRef (alle kostenlos)
-- **KI-Assistent** — Claude (Anthropic) für Formulierungshilfe, Fallanalyse, Recherchehilfe und freien Chat
+- **KI-Assistent** — Google Gemini 1.5 Flash (kostenlos) für Formulierungshilfe, Fallanalyse, Recherchehilfe und freien Chat
 - **Lerntools** — Karteikarten, Pomodoro-Timer, Zitiergenerator (APA), Notenrechner
 - **Netzwerk** — Lerngruppen, Mentor*innen
 - **Fachbibliothek & Ressourcen** — kuratierte Literatur und Links
@@ -35,7 +35,7 @@ Diese Datei dient als vollständiger Leitfaden für KI-Assistenten, die an diese
 └── server/                    # Backend — Node.js + Express + MongoDB
     ├── server.js              # Einstiegspunkt: DB-Verbindung, Listen
     ├── app.js                 # Express-App: Middleware, Routen, Rate-Limiting
-    ├── package.json           # Abhängigkeiten inkl. @anthropic-ai/sdk
+    ├── package.json           # Abhängigkeiten inkl. @google/generative-ai
     ├── seed.js                # DB-Befüllung mit Beispieldaten
     ├── .env.example           # Vorlage für Umgebungsvariablen
     ├── .gitignore
@@ -63,7 +63,7 @@ Diese Datei dient als vollständiger Leitfaden für KI-Assistenten, die an diese
 | Frontend | Vanilla HTML5, CSS3, ES6+ | Kein Framework, kein Build-Schritt |
 | Backend | Node.js + Express 4.18.2 | |
 | Datenbank | MongoDB 7 + Mongoose 7.0.3 | |
-| KI | `@anthropic-ai/sdk` → `claude-haiku-4-5-20251001` | Prompt-Caching aktiviert |
+| KI | `@google/generative-ai` → `gemini-1.5-flash` | Kostenlos, 1500 Anfragen/Tag |
 | Authentifizierung | JWT (`jsonwebtoken`), bcryptjs (12 Runden) | |
 | Rate-Limiting | `express-rate-limit` (30 KI-Anfragen/Min/IP) | |
 | Externe APIs | OpenAlex, Semantic Scholar, CrossRef, node-fetch | Alle kostenlos, kein Schlüssel nötig |
@@ -78,7 +78,7 @@ Diese Datei dient als vollständiger Leitfaden für KI-Assistenten, die an diese
 ```bash
 MONGODB_URI=mongodb://localhost:27017/sozialapp
 JWT_SECRET=<sicherer-zufaelliger-schluessel-min-32-zeichen>
-ANTHROPIC_API_KEY=sk-ant-...
+GEMINI_API_KEY=AIza...
 PORT=5000
 ```
 
@@ -86,7 +86,7 @@ PORT=5000
 |---|---|---|
 | `MONGODB_URI` | MongoDB-Verbindungsstring | Ja |
 | `JWT_SECRET` | JWT-Signierungsschlüssel | Ja |
-| `ANTHROPIC_API_KEY` | Claude API (console.anthropic.com) | Ja (für KI-Features) |
+| `GEMINI_API_KEY` | Google Gemini API (aistudio.google.com) | Ja (für KI-Features, kostenlos) |
 | `PORT` | HTTP-Port | Nein (Standard: 5000) |
 
 ---
@@ -169,7 +169,7 @@ Validierung: E-Mail-Format, Passwort min. 6 Zeichen, Duplikatprüfung.
 | POST | `/recherche` | `frage, kontext?` | Fachrecherche mit Datenbankempfehlungen |
 | POST | `/chat` | `nachricht, verlauf?[]` | Freier Chat (max. 20 Nachrichten Verlauf) |
 
-KI-Modell: `claude-haiku-4-5-20251001` — System-Prompt wird gecacht (spart Kosten).
+KI-Modell: `gemini-1.5-flash` (Google, kostenlos) — 1500 Anfragen/Tag, 15/Minute.
 Textlimit Formulierung: max. 3000 Zeichen.
 
 ### Online-Datenbanken — `/api/databases` *(Auth erforderlich)*
@@ -283,8 +283,10 @@ const API_URL = 'http://localhost:5000/api';
 - CSS-Variablen aus `--gruen`, `--blau`, `--lila` für konsistentes Farbschema
 
 ### KI-Integration
-- Modell: `claude-haiku-4-5-20251001` (günstig, schnell — ca. $0,80/1M Input-Token)
-- System-Prompt: Wird mit `cache_control: { type: 'ephemeral' }` gecacht → günstigere Folgeaufrufe
+- Modell: `gemini-1.5-flash` (Google, völlig kostenlos — 1500 Anfragen/Tag, kein Kreditkarte)
+- API-Schlüssel: kostenlos via https://aistudio.google.com/app/apikey
+- System-Prompt: wird als `systemInstruction` bei Modellinitialisierung übergeben
+- Chat-Verlauf: Gemini verwendet `role: 'model'` statt `'assistant'` → wird in ai.js gemappt
 - Datenschutz-Hinweis im UI: Keine realen Klientdaten eingeben
 - Rate-Limiting: 30 Anfragen/Minute/IP via `express-rate-limit`
 - Textlimits: Formulierung max. 3000 Zeichen, Chat-Verlauf max. 20 Nachrichten
