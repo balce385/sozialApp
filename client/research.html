@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forschung & Tools – SozialApp</title>
+  <link rel="stylesheet" href="research.css" />
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">🎓 SozialApp</a>
+  <div class="nav-links">
+    <a href="index.html"   class="nav-link">Feed</a>
+    <a href="research.html" class="nav-link active">Forschung & Tools</a>
+  </div>
+  <button onclick="logout()" class="btn-logout">Abmelden</button>
+</nav>
+
+<!-- ── TABS ──────────────────────────────────────────────────────────── -->
+<div class="tab-bar">
+  <button class="tab active"    onclick="showTab('bibliothek')">📚 Bibliothek</button>
+  <button class="tab"           onclick="showTab('datenbanken')">🌐 Datenbanken</button>
+  <button class="tab"           onclick="showTab('fallstudien')">📋 Fallstudien</button>
+  <button class="tab"           onclick="showTab('tools')">🛠️ Lerntools</button>
+  <button class="tab"           onclick="showTab('ki')">🤖 KI-Assistent</button>
+  <button class="tab"           onclick="showTab('netzwerk')">👥 Netzwerk</button>
+  <button class="tab"           onclick="showTab('ressourcen')">🔗 Ressourcen</button>
+</div>
+
+<div class="page-content">
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: BIBLIOTHEK
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="bibliothek-tab" class="tab-content active">
+    <h2>📚 Fachbibliothek Soziale Arbeit</h2>
+    <div class="search-bar">
+      <input id="lib-search" type="text" placeholder="Titel, Autor oder Stichwort…"
+        oninput="searchLibrary()" />
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-category="all"        onclick="filterLib(this)">Alle</button>
+      <button class="filter-btn"        data-category="sozialarbeit" onclick="filterLib(this)">Soziale Arbeit</button>
+      <button class="filter-btn"        data-category="psychologie"  onclick="filterLib(this)">Psychologie</button>
+      <button class="filter-btn"        data-category="recht"        onclick="filterLib(this)">Recht</button>
+      <button class="filter-btn"        data-category="methoden"     onclick="filterLib(this)">Methoden</button>
+    </div>
+    <div id="library-results" class="card-grid"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: ONLINE-DATENBANKEN
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="datenbanken-tab" class="tab-content">
+    <h2>🌐 Wissenschaftliche Online-Datenbanken</h2>
+    <p class="tab-intro">Kostenlose akademische Datenbanken für deine Recherche in der Sozialen Arbeit. Alle Suchanfragen werden direkt an die jeweiligen APIs weitergeleitet.</p>
+
+    <!-- Datenbank-Auswahl -->
+    <div class="db-switcher">
+      <button class="db-tab active" onclick="switchDB('openalex',        this)">OpenAlex</button>
+      <button class="db-tab"        onclick="switchDB('semanticscholar', this)">Semantic Scholar</button>
+      <button class="db-tab"        onclick="switchDB('crossref',        this)">CrossRef</button>
+      <button class="db-tab"        onclick="switchDB('uebersicht',      this)">📋 Alle Datenbanken</button>
+    </div>
+
+    <!-- Suche -->
+    <div id="db-search-area" class="search-bar">
+      <input id="db-search" type="text" placeholder="Suchbegriff eingeben…"
+        onkeydown="if(event.key==='Enter') searchDB()" />
+      <button onclick="searchDB()" class="btn-primary btn-inline">Suchen</button>
+    </div>
+    <div id="db-filter-info" class="db-info-box">
+      <strong>OpenAlex</strong> — 200+ Mio. wissenschaftliche Werke, komplett kostenlos, kein Account nötig.<br>
+      <span class="tipp">💡 Tipp: Suche auf Deutsch oder Englisch. Filter: "Soziale Arbeit", "SGB VIII", "social work"</span>
+    </div>
+
+    <div id="db-results" class="db-results"></div>
+    <div id="db-pagination" class="pagination"></div>
+
+    <!-- Übersicht aller Datenbanken -->
+    <div id="uebersicht-area" style="display:none">
+      <div id="db-liste-container" class="db-liste"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: FALLSTUDIEN
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="fallstudien-tab" class="tab-content">
+    <h2>📋 Fallstudien Soziale Arbeit</h2>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-category="" onclick="filterCases(this)">Alle</button>
+      <button class="filter-btn" data-category="jugend"   onclick="filterCases(this)">Jugendhilfe</button>
+      <button class="filter-btn" data-category="sucht"    onclick="filterCases(this)">Sucht</button>
+      <button class="filter-btn" data-category="pflege"   onclick="filterCases(this)">Pflege</button>
+    </div>
+    <div id="case-results" class="card-grid"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: LERNTOOLS
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="tools-tab" class="tab-content">
+    <h2>🛠️ Lerntools</h2>
+    <div class="tools-grid">
+
+      <!-- Karteikarten -->
+      <div class="tool-section">
+        <h3>🃏 Karteikarten</h3>
+        <div class="flashcard-container">
+          <div class="flashcard" onclick="flipCard()">
+            <div id="flashcard-inner" class="flashcard-inner">
+              <div class="flashcard-front">
+                <p id="card-question">Karte wird geladen…</p>
+              </div>
+              <div class="flashcard-back">
+                <p id="card-answer"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="card-counter" class="card-counter">0/0</p>
+        <div class="flashcard-nav">
+          <button onclick="prevCard()" class="btn-secondary">← Vorherige</button>
+          <button onclick="flipCard()" class="btn-secondary">Umdrehen</button>
+          <button onclick="nextCard()" class="btn-secondary">Nächste →</button>
+        </div>
+      </div>
+
+      <!-- Pomodoro Timer -->
+      <div class="tool-section">
+        <h3>⏱️ Pomodoro-Timer</h3>
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-controls">
+          <button onclick="startTimer()" class="btn-primary">▶ Start</button>
+          <button onclick="resetTimer()" class="btn-secondary">↺ Reset</button>
+        </div>
+        <div class="timer-settings">
+          <label>Minuten: <input id="timer-min" type="number" value="25" min="1" max="60"
+            onchange="setTimerMinutes(this.value)" /></label>
+        </div>
+      </div>
+
+      <!-- Zitiergenerator -->
+      <div class="tool-section">
+        <h3>📖 Zitiergenerator (APA)</h3>
+        <select id="cite-type" class="select-input">
+          <option value="buch">Buch</option>
+          <option value="artikel">Zeitschriftenartikel</option>
+          <option value="sammelband">Sammelband-Beitrag</option>
+        </select>
+        <input id="cite-author"    type="text" placeholder="Autor(en): Müller, A." />
+        <input id="cite-year"      type="text" placeholder="Erscheinungsjahr" />
+        <input id="cite-title"     type="text" placeholder="Titel des Werks" />
+        <input id="cite-publisher" type="text" placeholder="Verlag / Zeitschrift / Hrsg." />
+        <input id="cite-ort"       type="text" placeholder="Erscheinungsort (nur Buch)" />
+        <button onclick="generateCitation()" class="btn-primary">Zitat erstellen</button>
+        <div id="citation-result" class="result-box"></div>
+      </div>
+
+      <!-- Notenrechner -->
+      <div class="tool-section">
+        <h3>🎓 Notenrechner</h3>
+        <input id="note-input"   type="number" placeholder="Note (1.0–5.0)" step="0.1" min="1" max="5" />
+        <input id="gewicht-input" type="number" placeholder="Gewichtung in %" min="1" max="100" />
+        <button onclick="addNote()" class="btn-secondary">+ Note hinzufügen</button>
+        <div id="noten-liste" class="noten-liste"></div>
+        <button onclick="berechneNoten()" class="btn-primary">Durchschnitt berechnen</button>
+        <div id="grade-result" class="result-box"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: KI-ASSISTENT
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="ki-tab" class="tab-content">
+    <h2>🤖 KI-Assistent für Soziale Arbeit</h2>
+    <p class="tab-intro">Dein persönlicher Assistent – angetrieben von Claude (Anthropic). Kostenlos für alle Nutzer*innen der SozialApp. Alle Anfragen werden anonym verarbeitet; keine realen Klientdaten eingeben.</p>
+
+    <!-- KI-Unternavigation -->
+    <div class="ki-tabs">
+      <button class="ki-tab active" onclick="switchKI('formulierung')">✍️ Formulierungshilfe</button>
+      <button class="ki-tab"        onclick="switchKI('fallanalyse')">📋 Fallanalyse</button>
+      <button class="ki-tab"        onclick="switchKI('recherche')">🔍 Recherchehilfe</button>
+      <button class="ki-tab"        onclick="switchKI('chat')">💬 Freier Chat</button>
+    </div>
+
+    <!-- ── Formulierungshilfe ─────────────────────────────────── -->
+    <div id="ki-formulierung" class="ki-panel active">
+      <h3>✍️ Formulierungshilfe</h3>
+      <p class="panel-hint">Füge deinen Text ein und wähle, wie er überarbeitet werden soll.</p>
+      <textarea id="formul-text" placeholder="Hier deinen Text einfügen…" rows="6" maxlength="3000"></textarea>
+      <div class="formul-footer">
+        <span id="formul-count" class="char-count">0 / 3000</span>
+        <select id="formul-modus" class="select-input">
+          <option value="verbessern">Sprachlich verbessern</option>
+          <option value="umformulieren">Umformulieren</option>
+          <option value="kuerzen">Kürzen</option>
+          <option value="erweitern">Erweitern</option>
+          <option value="korrektorat">Korrektorat</option>
+        </select>
+      </div>
+      <button onclick="formulierungshilfe()" class="btn-primary ki-btn" id="formul-btn">
+        🤖 KI überarbeiten lassen
+      </button>
+      <div id="formul-result" class="ki-result" style="display:none">
+        <div class="ki-result-header">
+          <strong>Überarbeiteter Text</strong>
+          <button onclick="kopiereText('formul-output')" class="btn-small btn-secondary">📋 Kopieren</button>
+        </div>
+        <div id="formul-output" class="ki-output"></div>
+      </div>
+    </div>
+
+    <!-- ── KI-Fallanalyse ─────────────────────────────────────── -->
+    <div id="ki-fallanalyse" class="ki-panel">
+      <h3>📋 KI-gestützte Fallanalyse</h3>
+      <p class="panel-hint">⚠️ Keine realen Namen oder identifizierenden Daten verwenden (Datenschutz!).</p>
+      <div class="form-grid">
+        <input id="ki-fall-name"        type="text" placeholder="Klient*in / Fallbezeichnung (anonym)" />
+        <select id="ki-fall-bereich"    class="select-input">
+          <option value="Kinder- und Jugendhilfe">Kinder- und Jugendhilfe</option>
+          <option value="Sozialhilfe / SGB XII">Sozialhilfe / SGB XII</option>
+          <option value="Suchtberatung">Suchtberatung</option>
+          <option value="Flüchtlingshilfe">Flüchtlingshilfe</option>
+          <option value="Altenbetreuung">Altenbetreuung</option>
+          <option value="Schuldnerberatung">Schuldnerberatung</option>
+          <option value="Wohnungslosenhilfe">Wohnungslosenhilfe</option>
+          <option value="Eingliederungshilfe">Eingliederungshilfe</option>
+        </select>
+        <textarea id="ki-fall-situation"    placeholder="Ausgangssituation beschreiben…" rows="3"></textarea>
+        <textarea id="ki-fall-hintergrund"  placeholder="Vorgeschichte / Hintergrund (optional)…" rows="2"></textarea>
+        <textarea id="ki-fall-ziele"        placeholder="Interventionsziele…" rows="2"></textarea>
+      </div>
+      <button onclick="kiFallanalyse()" class="btn-primary ki-btn" id="fall-btn">
+        🤖 Fallanalyse erstellen
+      </button>
+      <div id="fall-result" class="ki-result" style="display:none">
+        <div class="ki-result-header">
+          <strong>Fallanalyse</strong>
+          <button onclick="kopiereText('fall-output')" class="btn-small btn-secondary">📋 Kopieren</button>
+        </div>
+        <div id="fall-output" class="ki-output markdown"></div>
+      </div>
+    </div>
+
+    <!-- ── Recherchehilfe ─────────────────────────────────────── -->
+    <div id="ki-recherche" class="ki-panel">
+      <h3>🔍 Recherchehilfe</h3>
+      <p class="panel-hint">Stelle eine Fachfrage – die KI gibt dir Kernaussagen, Fachbegriffe und Datenbankempfehlungen.</p>
+      <input  id="recherche-frage"   type="text" placeholder="Deine Fachfrage…" />
+      <input  id="recherche-kontext" type="text" placeholder="Thematischer Kontext (z. B. SGB VIII, Jugendhilfe)" />
+      <button onclick="kiRecherche()" class="btn-primary ki-btn" id="recherche-btn">
+        🤖 Recherche starten
+      </button>
+      <div id="recherche-result" class="ki-result" style="display:none">
+        <div class="ki-result-header">
+          <strong>Rechercheantwort</strong>
+          <button onclick="kopiereText('recherche-output')" class="btn-small btn-secondary">📋 Kopieren</button>
+        </div>
+        <div id="recherche-output" class="ki-output markdown"></div>
+      </div>
+    </div>
+
+    <!-- ── Freier Chat ─────────────────────────────────────────── -->
+    <div id="ki-chat" class="ki-panel">
+      <h3>💬 Freier Chat</h3>
+      <p class="panel-hint">Stelle beliebige Fragen rund um Soziale Arbeit. Der Gesprächsverlauf wird lokal gespeichert (max. 20 Nachrichten).</p>
+      <div id="chat-verlauf" class="chat-verlauf"></div>
+      <div class="chat-compose">
+        <input id="chat-input" type="text" placeholder="Deine Frage oder Nachricht…"
+          onkeydown="if(event.key==='Enter') chatSenden()" maxlength="1000" />
+        <button onclick="chatSenden()" class="btn-primary">Senden</button>
+      </div>
+      <button onclick="chatLeeren()" class="btn-secondary btn-small" style="margin-top:8px">🗑️ Chat leeren</button>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: NETZWERK
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="netzwerk-tab" class="tab-content">
+    <h2>👥 Netzwerk & Zusammenarbeit</h2>
+    <div class="netzwerk-grid">
+      <div>
+        <h3>Lerngruppen</h3>
+        <div id="groups-container"></div>
+      </div>
+      <div>
+        <h3>Mentor*innen</h3>
+        <div id="mentors-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAB: RESSOURCEN
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="ressourcen-tab" class="tab-content">
+    <h2>🔗 Lernressourcen & Links</h2>
+    <div id="resources-grid" class="resources-grid"></div>
+  </div>
+
+</div><!-- /.page-content -->
+
+<script src="research.js"></script>
+</body>
+</html>
