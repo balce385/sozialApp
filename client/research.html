@@ -160,6 +160,25 @@
           <div id="grade-result" class="result-box"></div>
         </div>
 
+        <!-- Formulierungshilfe (Gemini KI) -->
+        <div class="tool-card tool-card-wide">
+          <h3>🤖 Formulierungshilfe (KI)</h3>
+          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Lass dir von der KI professionelle Formulierungen für Berichte, Anträge und Dokumentationen erstellen.</p>
+          <div class="form-row">
+            <select id="gemini-aufgabe">
+              <option value="Schreibe einen professionellen Sozialbericht">📄 Sozialbericht</option>
+              <option value="Formuliere eine Hilfeplanung">📋 Hilfeplanung</option>
+              <option value="Erstelle eine Gesprächsdokumentation">💬 Gesprächsdokumentation</option>
+              <option value="Verfasse einen Förderantrag">📝 Förderantrag</option>
+              <option value="Formuliere eine Stellungnahme für das Gericht">⚖️ Gerichtliche Stellungnahme</option>
+              <option value="Schreibe eine Übergabe-Dokumentation">🔄 Übergabe-Dokumentation</option>
+            </select>
+          </div>
+          <textarea id="gemini-kontext" placeholder="Beschreibe den Kontext: Klient, Situation, wichtige Details…" rows="3"></textarea>
+          <button class="btn-primary-sm" onclick="geminiFormulierung()" id="gemini-btn">✨ Formulierung generieren</button>
+          <div id="gemini-result" class="result-box"></div>
+        </div>
+
       </div>
     </div>
 

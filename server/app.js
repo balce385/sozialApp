@@ -4,6 +4,7 @@ const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const researchRoutes = require('./routes/research');
 const userRoutes = require('./routes/users');
+const geminiRoutes = require('./routes/gemini');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/research', researchRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/gemini', geminiRoutes);
 
 // Fehlerbehandlung
 app.use((err, req, res, next) => {

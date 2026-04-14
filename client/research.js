@@ -267,6 +267,53 @@ function getIntervention(bereich) {
   return interventions[bereich] || 'Individuelle Beratung und Unterstützung';
 }
 
+// Formulierungshilfe mit Gemini KI
+async function geminiFormulierung() {
+  const kontext = document.getElementById('gemini-kontext').value.trim();
+  const aufgabe = document.getElementById('gemini-aufgabe').value;
+
+  if (!kontext) {
+    alert('Bitte den Kontext/die Situation beschreiben.');
+    return;
+  }
+
+  const btn = document.getElementById('gemini-btn');
+  const result = document.getElementById('gemini-result');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Wird generiert…';
+  result.innerHTML = '';
+  result.classList.remove('show');
+
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/gemini/formulierung`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'x-auth-token': token } : {})
+      },
+      body: JSON.stringify({ kontext, aufgabe })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.msg || 'KI-Anfrage fehlgeschlagen');
+    }
+
+    result.innerHTML = `<strong>Formulierungsvorschlag:</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
+    result.classList.add('show');
+  } catch (err) {
+    console.error(err);
+    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ Formulierung generieren';
+  }
+}
+
 // Noten berechnen
 function calculateGrade() {
   const exams = parseInt(document.getElementById('exam-count').value);
