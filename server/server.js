@@ -33,7 +33,7 @@ async function autoSeed() {
     const { LibraryItem } = require('./models/Research');
     const count = await LibraryItem.countDocuments();
     if (count > 0) {
-      console.log(`Datenbank bereits befüllt (${count} Bibliothekseinträge) – Seed übersprungen.`);
+      console.log(`Datenbank bereits befüllt (${count} Einträge) – Seed übersprungen.`);
       return;
     }
     console.log('Datenbank ist leer – Seed-Daten werden eingespielt...');

@@ -1,8 +1,30 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const User = require('./models/User');
 const {
   LibraryItem, CaseStudy, Flashcard, Group, Mentor, Resource
 } = require('./models/Research');
+
+// ===== TEST-BENUTZER =====
+const usersData = [
+  {
+    name: 'Test Nutzer',
+    username: 'test',
+    email: 'test@sozialapp.de',
+    password: 'Test1234',
+    bio: 'Demo-Account für Tests',
+    emoji: '🧪'
+  },
+  {
+    name: 'Anna Müller',
+    username: 'anna',
+    email: 'anna@sozialapp.de',
+    password: 'Anna1234',
+    bio: 'Studentin der Sozialen Arbeit im 4. Semester',
+    emoji: '👩‍🎓'
+  }
+];
 
 // ===== BIBLIOTHEK =====
 const libraryData = [
@@ -313,12 +335,19 @@ const resourcesData = [
 
 // ===== SEED-FUNKTION (exportierbar) =====
 async function seedDatabase() {
+  await User.deleteMany({});
   await LibraryItem.deleteMany({});
   await CaseStudy.deleteMany({});
   await Flashcard.deleteMany({});
   await Group.deleteMany({});
   await Mentor.deleteMany({});
   await Resource.deleteMany({});
+
+  // Benutzer mit gehashetem Passwort anlegen
+  for (const u of usersData) {
+    const user = new User(u);
+    await user.save(); // pre-save hook hasht das Passwort
+  }
 
   await LibraryItem.insertMany(libraryData);
   await CaseStudy.insertMany(casesData);
@@ -327,6 +356,7 @@ async function seedDatabase() {
   await Mentor.insertMany(mentorsData);
   await Resource.insertMany(resourcesData);
 
+  console.log(`✓ ${usersData.length} Test-Benutzer`);
   console.log(`✓ ${libraryData.length} Bibliothekseinträge`);
   console.log(`✓ ${casesData.length} Fallstudien`);
   console.log(`✓ ${flashcardsData.length} Lernkarten`);
