@@ -74,7 +74,11 @@ async function register() {
     await getCurrentUser();
     showMainPage();
   } catch (err) {
-    alert('Registrierung fehlgeschlagen: ' + err.message);
+    if (err.name === 'TypeError') {
+      alert('Netzwerkfehler – Server nicht erreichbar.\nBackend: ' + API_URL);
+    } else {
+      alert('Registrierung fehlgeschlagen: ' + err.message);
+    }
   }
 }
 

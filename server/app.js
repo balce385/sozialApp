@@ -7,9 +7,9 @@ const userRoutes = require('./routes/users');
 
 const app = express();
 
-// CORS: alle Origins erlauben (iOS Safari Preflight-kompatibel)
-app.use(cors());
+// CORS: Preflight (OPTIONS) zuerst, dann alle übrigen Methoden
 app.options('*', cors());
+app.use(cors());
 app.use(express.json());
 
 // Health-Check für Render (verhindert Cold-Start-Timeout)
