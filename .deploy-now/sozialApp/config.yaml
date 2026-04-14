@@ -1,6 +1,4 @@
 ---
-# IONOS Deploy Now – Konfiguration für sozial.app
-# Statische Dateien aus dem client/-Ordner
-
-deploy-now-api:
-  version: 1.0
+version: 1
+configuration:
+  document-root: /
