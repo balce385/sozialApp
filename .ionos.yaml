@@ -1,0 +1,13 @@
+---
+setup:
+  ionosVersion: v1
+  runtime: node18
+  document-root: /
+  deploy-on-push: true
+deployment:
+  type: runtime
+  auto-update:
+    runtime: true
+    dependencies: true
+  environment:
+    NODE_ENV: production
