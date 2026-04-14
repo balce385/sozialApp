@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lernen & Forschen – sozial.app</title>
+  <link rel="stylesheet" href="research.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <span class="nav-logo">sozial.app</span>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">🏠 Feed</a>
+      <span class="nav-btn nav-active">📚 Lernen</span>
+    </div>
+  </nav>
+
+  <div class="research-layout">
+
+    <!-- Tab-Navigation -->
+    <div class="tab-nav">
+      <button class="tab active" onclick="showTab('library')">📖 Bibliothek</button>
+      <button class="tab" onclick="showTab('cases')">📋 Fallstudien</button>
+      <button class="tab" onclick="showTab('tools')">🛠️ Tools</button>
+      <button class="tab" onclick="showTab('network')">🤝 Netzwerk</button>
+      <button class="tab" onclick="showTab('resources')">🔗 Ressourcen</button>
+    </div>
+
+    <!-- ===== BIBLIOTHEK ===== -->
+    <div id="library-tab" class="tab-content active">
+      <div class="section-header">
+        <h2>📖 Fachbibliothek</h2>
+        <p>Bücher, Artikel und Fachpublikationen zur Sozialen Arbeit</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="lib-search" placeholder="Titel, Autor oder Stichwort suchen…" oninput="searchLibrary()" />
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn active" data-category="all" onclick="filterLib('all')">Alle</button>
+        <button class="filter-btn" data-category="sozialarbeit" onclick="filterLib('sozialarbeit')">Soziale Arbeit</button>
+        <button class="filter-btn" data-category="psychologie" onclick="filterLib('psychologie')">Psychologie</button>
+        <button class="filter-btn" data-category="recht" onclick="filterLib('recht')">Recht</button>
+        <button class="filter-btn" data-category="methoden" onclick="filterLib('methoden')">Methoden</button>
+      </div>
+      <div id="library-results" class="card-grid">
+        <p class="empty-hint">Bibliothek wird geladen…</p>
+      </div>
+    </div>
+
+    <!-- ===== FALLSTUDIEN ===== -->
+    <div id="cases-tab" class="tab-content">
+      <div class="section-header">
+        <h2>📋 Fallstudien</h2>
+        <p>Reale Fälle aus der Sozialen Arbeit zur Analyse und zum Lernen</p>
+      </div>
+      <div id="case-results" class="card-grid">
+        <p class="empty-hint">Fallstudien werden geladen…</p>
+      </div>
+    </div>
+
+    <!-- ===== TOOLS ===== -->
+    <div id="tools-tab" class="tab-content">
+      <div class="section-header">
+        <h2>🛠️ Lerntools</h2>
+        <p>Lernkarten, Pomodoro-Timer, Zitatgenerator und mehr</p>
+      </div>
+
+      <div class="tools-grid">
+
+        <!-- Lernkarten -->
+        <div class="tool-card">
+          <h3>🃏 Lernkarten</h3>
+          <div class="flashcard-wrapper">
+            <div class="flashcard" onclick="flipCard()">
+              <div id="flashcard-inner" class="flashcard-inner">
+                <div class="flashcard-front">
+                  <p id="card-question">Lernkarten werden geladen…</p>
+                </div>
+                <div class="flashcard-back">
+                  <p id="card-answer"></p>
+                </div>
+              </div>
+            </div>
+            <p class="card-counter" id="card-counter">0/0</p>
+          </div>
+          <div class="card-controls">
+            <button class="btn-outline" onclick="prevCard()">← Zurück</button>
+            <button class="btn-outline" onclick="flipCard()">Umdrehen</button>
+            <button class="btn-outline" onclick="nextCard()">Weiter →</button>
+          </div>
+        </div>
+
+        <!-- Pomodoro-Timer -->
+        <div class="tool-card">
+          <h3>⏱️ Pomodoro-Timer</h3>
+          <div class="timer-display" id="timer-display">25:00</div>
+          <div class="timer-controls">
+            <button class="btn-primary-sm" onclick="startTimer()">▶ Start</button>
+            <button class="btn-outline-sm" onclick="stopTimer()">⏸ Pause</button>
+            <button class="btn-outline-sm" onclick="resetTimer()">↺ Reset</button>
+          </div>
+        </div>
+
+        <!-- Zitatgenerator -->
+        <div class="tool-card tool-card-wide">
+          <h3>📝 APA-Zitatgenerator</h3>
+          <div class="form-row">
+            <select id="cite-type">
+              <option value="buch">Buch</option>
+              <option value="artikel">Artikel</option>
+            </select>
+            <input type="text" id="cite-author" placeholder="Autor (Nachname, V.)" />
+            <input type="text" id="cite-year" placeholder="Jahr" style="max-width:100px" />
+          </div>
+          <div class="form-row">
+            <input type="text" id="cite-title" placeholder="Titel" />
+            <input type="text" id="cite-publisher" placeholder="Verlag / Zeitschrift" />
+          </div>
+          <button class="btn-primary-sm" onclick="generateCitation()">Zitat generieren</button>
+          <div id="citation-result" class="result-box"></div>
+        </div>
+
+        <!-- Fallanalyse -->
+        <div class="tool-card tool-card-wide">
+          <h3>🔍 Fallanalyse-Tool</h3>
+          <div class="form-row">
+            <input type="text" id="fall-name" placeholder="Name / Pseudonym des Falls" />
+            <select id="fall-bereich">
+              <option>Kinder &amp; Jugendhilfe</option>
+              <option>Sozialhilfe</option>
+              <option>Suchtberatung</option>
+              <option>Flüchtlingshilfe</option>
+              <option>Altenbetreuung</option>
+              <option>Schuldnerberatung</option>
+            </select>
+          </div>
+          <textarea id="fall-situation" placeholder="Ausgangssituation beschreiben…" rows="2"></textarea>
+          <textarea id="fall-ziele" placeholder="Interventionsziele…" rows="2"></textarea>
+          <button class="btn-primary-sm" onclick="analyzeFall()">Analysieren</button>
+          <div id="fall-result" class="result-box"></div>
+        </div>
+
+        <!-- Notenrechner -->
+        <div class="tool-card">
+          <h3>🎓 Notenrechner</h3>
+          <div class="grade-form">
+            <label>Anzahl Prüfungen
+              <input type="number" id="exam-count" min="1" value="3" />
+            </label>
+            <label>Gewichtung (%)
+              <input type="number" id="exam-weight" min="1" max="100" value="33" />
+            </label>
+            <label>Note (1,0 – 5,0)
+              <input type="number" id="exam-grade" step="0.1" min="1" max="5" value="2.0" />
+            </label>
+          </div>
+          <button class="btn-primary-sm" onclick="calculateGrade()">Berechnen</button>
+          <div id="grade-result" class="result-box"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== NETZWERK ===== -->
+    <div id="network-tab" class="tab-content">
+      <div class="section-header">
+        <h2>🤝 Netzwerk</h2>
+        <p>Gruppen und Mentoren für dein Studium</p>
+      </div>
+      <h3 class="sub-heading">Studiengruppen</h3>
+      <div id="groups-container" class="list-container">
+        <p class="empty-hint">Gruppen werden geladen…</p>
+      </div>
+      <h3 class="sub-heading">Mentoren</h3>
+      <div id="mentors-container" class="list-container">
+        <p class="empty-hint">Mentoren werden geladen…</p>
+      </div>
+    </div>
+
+    <!-- ===== RESSOURCEN ===== -->
+    <div id="resources-tab" class="tab-content">
+      <div class="section-header">
+        <h2>🔗 Ressourcen</h2>
+        <p>Nützliche Links und externe Angebote</p>
+      </div>
+      <div id="resources-grid" class="resources-grid">
+        <p class="empty-hint">Ressourcen werden geladen…</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="research.js"></script>
+</body>
+</html>

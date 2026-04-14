@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sozial.app</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== LOGIN-SEITE ===== -->
+  <div id="login-page" class="page active">
+    <div class="auth-wrapper">
+      <div class="auth-header">
+        <h1>sozial.app</h1>
+        <p>Dein Netzwerk für Soziale Arbeit</p>
+      </div>
+      <div class="auth-card">
+        <h2>Anmelden</h2>
+        <input type="text" id="username" placeholder="Benutzername" autocomplete="username" />
+        <input type="password" id="password" placeholder="Passwort" autocomplete="current-password" />
+        <button class="btn-primary" onclick="login()">Anmelden</button>
+        <p class="auth-switch">
+          Noch kein Konto?
+          <a onclick="showRegister()">Registrieren</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REGISTRIERUNGS-SEITE ===== -->
+  <div id="register-page" class="page">
+    <div class="auth-wrapper">
+      <div class="auth-header">
+        <h1>sozial.app</h1>
+        <p>Konto erstellen</p>
+      </div>
+      <div class="auth-card">
+        <h2>Registrieren</h2>
+        <input type="text" id="reg-name" placeholder="Vollständiger Name" autocomplete="name" />
+        <input type="text" id="reg-username" placeholder="Benutzername" autocomplete="username" />
+        <input type="email" id="reg-email" placeholder="E-Mail-Adresse" autocomplete="email" />
+        <input type="password" id="reg-password" placeholder="Passwort (min. 6 Zeichen)" autocomplete="new-password" />
+        <button class="btn-primary" onclick="register()">Konto erstellen</button>
+        <p class="auth-switch">
+          Bereits registriert?
+          <a onclick="showLogin()">Anmelden</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HAUPTSEITE ===== -->
+  <div id="main-page" class="page">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <span class="nav-logo">sozial.app</span>
+      <div class="nav-links">
+        <button class="nav-btn" onclick="showPage('feed')">🏠 Feed</button>
+        <button class="nav-btn" onclick="showPage('profile')">👤 Profil</button>
+        <a href="research.html" class="nav-btn">📚 Lernen</a>
+        <button class="nav-btn nav-logout" onclick="logout()">Abmelden</button>
+      </div>
+    </nav>
+
+    <div class="main-layout">
+
+      <!-- Profil-Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-avatar" id="profile-avatar">🎓</div>
+          <h3 id="profile-name">Name</h3>
+          <p id="profile-username" class="sidebar-username">@username</p>
+          <div class="sidebar-stats">
+            <div>
+              <strong id="followers-count">0</strong>
+              <span>Follower</span>
+            </div>
+            <div>
+              <strong id="following-count">0</strong>
+              <span>Folge ich</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Inhaltsbereich -->
+      <main class="content">
+
+        <!-- Feed-Unterseite -->
+        <div id="feed-page" class="sub-page active">
+          <div class="post-composer">
+            <textarea id="post-text" placeholder="Was beschäftigt dich gerade? 📝" rows="3"></textarea>
+            <button class="btn-primary btn-sm" onclick="createPost()">Posten</button>
+          </div>
+          <div id="posts-container">
+            <p class="empty-hint">Feed wird geladen…</p>
+          </div>
+        </div>
+
+        <!-- Profil-Unterseite -->
+        <div id="profile-page" class="sub-page">
+          <div class="profile-edit-card">
+            <h3>Profil bearbeiten</h3>
+            <input type="text" id="profile-name-input" placeholder="Name" />
+            <input type="text" id="profile-bio" placeholder="Bio" />
+            <input type="text" id="profile-emoji" placeholder="Emoji (z.B. 🎓)" maxlength="2" />
+            <button class="btn-primary btn-sm" onclick="updateProfile()">Speichern</button>
+          </div>
+          <h3 class="section-title">Meine Posts</h3>
+          <div id="user-posts-container">
+            <p class="empty-hint">Noch keine Posts</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
