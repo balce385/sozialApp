@@ -7,8 +7,22 @@ const userRoutes = require('./routes/users');
 
 const app = express();
 
-// Middleware muss VOR den Routen stehen
-app.use(cors());
+// CORS: erlaubt Anfragen vom IONOS-Frontend und lokaler Entwicklung
+const allowedOrigins = [
+  /\.app-ionos\.space$/,
+  /\.ionos\.space$/,
+  /^http:\/\/localhost/
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.some(p => p.test(origin))) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS nicht erlaubt: ' + origin));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Routen

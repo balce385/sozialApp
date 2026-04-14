@@ -2,8 +2,8 @@
 let currentUser = null;
 let token = localStorage.getItem('token');
 
-// API Base URL: relativ zum aktuellen Host (kein CORS-Problem, kein toter Heroku-Link)
-const API_URL = '/api';
+// API Base URL: liest aus config.js (BACKEND_URL = Render-URL), sonst relativ
+const API_URL = (window.BACKEND_URL || '') + '/api';
 
 // DOM Elemente
 const loginPage = document.getElementById('login-page');

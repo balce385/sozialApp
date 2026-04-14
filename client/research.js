@@ -7,8 +7,8 @@ let timerSeconds = 0;
 let timerRunning = false;
 let allCards = [];
 
-// API Base URL: relativ zum aktuellen Host
-const API_URL = '/api';
+// API Base URL: liest aus config.js (BACKEND_URL = Render-URL), sonst relativ
+const API_URL = (window.BACKEND_URL || '') + '/api';
 
 // DOM Elemente
 const libraryResults = document.getElementById('library-results');
