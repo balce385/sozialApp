@@ -311,35 +311,43 @@ const resourcesData = [
   }
 ];
 
-// ===== DATENBANK BEFÜLLEN =====
-mongoose.connect(process.env.MONGODB_URI)
-  .then(async () => {
-    console.log('MongoDB verbunden – Daten werden eingespielt...');
+// ===== SEED-FUNKTION (exportierbar) =====
+async function seedDatabase() {
+  await LibraryItem.deleteMany({});
+  await CaseStudy.deleteMany({});
+  await Flashcard.deleteMany({});
+  await Group.deleteMany({});
+  await Mentor.deleteMany({});
+  await Resource.deleteMany({});
 
-    await LibraryItem.deleteMany({});
-    await CaseStudy.deleteMany({});
-    await Flashcard.deleteMany({});
-    await Group.deleteMany({});
-    await Mentor.deleteMany({});
-    await Resource.deleteMany({});
+  await LibraryItem.insertMany(libraryData);
+  await CaseStudy.insertMany(casesData);
+  await Flashcard.insertMany(flashcardsData);
+  await Group.insertMany(groupsData);
+  await Mentor.insertMany(mentorsData);
+  await Resource.insertMany(resourcesData);
 
-    await LibraryItem.insertMany(libraryData);
-    await CaseStudy.insertMany(casesData);
-    await Flashcard.insertMany(flashcardsData);
-    await Group.insertMany(groupsData);
-    await Mentor.insertMany(mentorsData);
-    await Resource.insertMany(resourcesData);
+  console.log(`✓ ${libraryData.length} Bibliothekseinträge`);
+  console.log(`✓ ${casesData.length} Fallstudien`);
+  console.log(`✓ ${flashcardsData.length} Lernkarten`);
+  console.log(`✓ ${groupsData.length} Gruppen`);
+  console.log(`✓ ${mentorsData.length} Mentoren`);
+  console.log(`✓ ${resourcesData.length} Ressourcen`);
+  console.log('Seed erfolgreich abgeschlossen!');
+}
 
-    console.log(`✓ ${libraryData.length} Bibliothekseinträge`);
-    console.log(`✓ ${casesData.length} Fallstudien`);
-    console.log(`✓ ${flashcardsData.length} Lernkarten`);
-    console.log(`✓ ${groupsData.length} Gruppen`);
-    console.log(`✓ ${mentorsData.length} Mentoren`);
-    console.log(`✓ ${resourcesData.length} Ressourcen`);
-    console.log('Seed erfolgreich abgeschlossen!');
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error('Fehler:', err.message);
-    process.exit(1);
-  });
+module.exports = { seedDatabase };
+
+// Direkt ausführbar: node server/seed.js
+if (require.main === module) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(async () => {
+      console.log('MongoDB verbunden – Daten werden eingespielt...');
+      await seedDatabase();
+      process.exit(0);
+    })
+    .catch(err => {
+      console.error('Fehler:', err.message);
+      process.exit(1);
+    });
+}

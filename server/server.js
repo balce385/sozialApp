@@ -20,6 +20,27 @@ if (!uri) {
   console.error('FEHLER: MONGODB_URI ist nicht gesetzt! Bitte in Render unter Environment eintragen.');
 } else {
   mongoose.connect(uri)
-    .then(() => console.log('MongoDB verbunden'))
+    .then(async () => {
+      console.log('MongoDB verbunden');
+      await autoSeed();
+    })
     .catch(err => console.error('MongoDB Verbindungsfehler:', err.message));
 }
+
+// Datenbank automatisch befüllen, wenn sie noch leer ist
+async function autoSeed() {
+  try {
+    const { LibraryItem } = require('./models/Research');
+    const count = await LibraryItem.countDocuments();
+    if (count > 0) {
+      console.log(`Datenbank bereits befüllt (${count} Bibliothekseinträge) – Seed übersprungen.`);
+      return;
+    }
+    console.log('Datenbank ist leer – Seed-Daten werden eingespielt...');
+    const { seedDatabase } = require('./seed');
+    await seedDatabase();
+  } catch (err) {
+    console.error('Auto-Seed Fehler:', err.message);
+  }
+}
+
