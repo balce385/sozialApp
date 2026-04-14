@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>sozial.app – Lernplattform Soziale Arbeit</title>
+  <meta name="description" content="Die Lernplattform für Soziale Arbeit – Recherche, KI-Assistent, Karteikarten, Pomodoro und mehr." />
+  <meta name="theme-color" content="#007AFF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="sozial.app" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon.svg" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────────────────────── -->
+<div id="login-page" class="page active">
+  <div class="auth-container">
+    <div class="auth-logo">🎓</div>
+    <h1>sozial.app</h1>
+    <p class="auth-subtitle">Lernplattform für Soziale Arbeit</p>
+    <div class="auth-box">
+      <h2>Anmelden</h2>
+      <input id="username"  type="text"     placeholder="Benutzername" autocomplete="username" />
+      <input id="password"  type="password" placeholder="Passwort"     autocomplete="current-password" />
+      <button onclick="login()" class="btn-primary">Anmelden</button>
+      <p class="auth-switch">Noch kein Konto? <a href="#" onclick="showRegister()">Registrieren</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── REGISTRIERUNG ──────────────────────────────────────────────────── -->
+<div id="register-page" class="page">
+  <div class="auth-container">
+    <div class="auth-logo">🎓</div>
+    <h1>sozial.app</h1>
+    <p class="auth-subtitle">Konto erstellen</p>
+    <div class="auth-box">
+      <h2>Registrieren</h2>
+      <input id="reg-name"     type="text"     placeholder="Vollständiger Name" />
+      <input id="reg-username" type="text"     placeholder="Benutzername" />
+      <input id="reg-email"    type="email"    placeholder="E-Mail" />
+      <input id="reg-password" type="password" placeholder="Passwort (min. 6 Zeichen)" />
+      <button onclick="register()" class="btn-primary">Konto erstellen</button>
+      <p class="auth-switch">Bereits registriert? <a href="#" onclick="showLogin()">Anmelden</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── HAUPTSEITE ─────────────────────────────────────────────────────── -->
+<div id="main-page" class="page">
+
+  <!-- Navigationsleiste -->
+  <nav class="navbar">
+    <div class="nav-logo">🎓 sozial.app</div>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('feed')"    class="nav-link active">Feed</a>
+      <a href="#" onclick="showPage('profile')" class="nav-link">Profil</a>
+      <a href="research.html"                   class="nav-link">Recherche 🔬</a>
+    </div>
+    <button onclick="logout()" class="btn-logout">Abmelden</button>
+  </nav>
+
+  <div class="main-layout">
+
+    <!-- Linke Sidebar: Profil -->
+    <aside class="sidebar-left">
+      <div class="profile-card">
+        <div class="avatar" id="profile-avatar">🎓</div>
+        <h3 id="profile-name">Lädt…</h3>
+        <p id="profile-username" class="username-display">@lädt</p>
+        <div class="stats-row">
+          <div class="stat">
+            <span id="followers-count">0</span>
+            <small>Follower</small>
+          </div>
+          <div class="stat">
+            <span id="following-count">0</span>
+            <small>Folgt</small>
+          </div>
+        </div>
+      </div>
+      <a href="research.html" class="sidebar-link">🔬 Zur Forschungsseite</a>
+    </aside>
+
+    <!-- Hauptinhalt -->
+    <main class="main-content">
+
+      <!-- Feed-Seite -->
+      <div id="feed-page" class="content-page active">
+        <div class="post-compose">
+          <div class="compose-avatar" id="compose-avatar">🎓</div>
+          <div class="compose-area">
+            <textarea id="post-text" placeholder="Was beschäftigt dich gerade in der Sozialen Arbeit?" maxlength="1000"></textarea>
+            <div class="compose-footer">
+              <span id="char-count" class="char-count">0 / 1000</span>
+              <button onclick="createPost()" class="btn-primary">Teilen</button>
+            </div>
+          </div>
+        </div>
+        <div id="posts-container" class="posts-container">
+          <p class="loading">Beiträge werden geladen…</p>
+        </div>
+      </div>
+
+      <!-- Profil-Seite -->
+      <div id="profile-page" class="content-page">
+        <div class="profile-header">
+          <div class="avatar large" id="profile-avatar-large">🎓</div>
+          <div class="profile-info">
+            <h2 id="profile-name-large">Lädt…</h2>
+            <p id="profile-username-large" class="username-display">@lädt</p>
+            <p id="profile-bio-display" class="bio-display">Soziale Arbeit Studierende*r</p>
+          </div>
+        </div>
+
+        <div class="profile-edit-box">
+          <h3>Profil bearbeiten</h3>
+          <input  id="profile-name-input" type="text" placeholder="Name" />
+          <textarea id="profile-bio"      placeholder="Bio (max. 200 Zeichen)" maxlength="200"></textarea>
+          <input  id="profile-emoji"      type="text" placeholder="Emoji als Avatar (z. B. 🎓)" maxlength="2" />
+          <button onclick="updateProfile()" class="btn-primary">Speichern</button>
+        </div>
+
+        <h3>Meine Beiträge</h3>
+        <div id="user-posts-container"></div>
+      </div>
+
+    </main>
+
+    <!-- Rechte Sidebar: Recherche-Shortcuts -->
+    <aside class="sidebar-right">
+      <div class="sidebar-card">
+        <h4>🤖 KI-Assistent</h4>
+        <p>Formulierungshilfe & Fallanalyse auf der Forschungsseite.</p>
+        <a href="research.html#ki" class="btn-secondary btn-small">Öffnen</a>
+      </div>
+      <div class="sidebar-card">
+        <h4>📚 Datenbanken</h4>
+        <p>OpenAlex, SSOAR, BASE & mehr – kostenlos recherchieren.</p>
+        <a href="research.html#datenbanken" class="btn-secondary btn-small">Recherchieren</a>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

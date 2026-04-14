@@ -1,0 +1,21 @@
+{
+  "name": "sozial.app – Lernplattform Soziale Arbeit",
+  "short_name": "sozial.app",
+  "description": "Die Lernplattform für Soziale Arbeit – Recherche, KI-Assistent, Karteikarten, Pomodoro und mehr.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F2F2F7",
+  "theme_color": "#007AFF",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": []
+}
