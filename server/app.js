@@ -7,23 +7,13 @@ const userRoutes = require('./routes/users');
 
 const app = express();
 
-// CORS: erlaubt Anfragen vom IONOS-Frontend und lokaler Entwicklung
-const allowedOrigins = [
-  /\.app-ionos\.space$/,
-  /\.ionos\.space$/,
-  /^http:\/\/localhost/
-];
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.some(p => p.test(origin))) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS nicht erlaubt: ' + origin));
-    }
-  },
-  credentials: true
-}));
+// CORS: alle Origins erlauben (iOS Safari Preflight-kompatibel)
+app.use(cors());
+app.options('*', cors());
 app.use(express.json());
+
+// Health-Check für Render (verhindert Cold-Start-Timeout)
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Routen
 app.use('/api/auth', authRoutes);
