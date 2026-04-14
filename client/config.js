@@ -1,2 +1,2 @@
-// Backend-URL (Render.com)
-window.BACKEND_URL = 'https://sozialapp.onrender.com';
+// Leer = relative URL → Frontend und Backend laufen auf demselben Server (Render)
+window.BACKEND_URL = '';
