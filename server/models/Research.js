@@ -45,7 +45,8 @@ const resourceSchema = new mongoose.Schema({
   icon: { type: String, required: true },
   name: { type: String, required: true },
   desc: { type: String, required: true },
-  link: { type: String, required: true }
+  link: { type: String, required: true },
+  category: { type: String, default: 'organisation' }
 });
 
 module.exports = {

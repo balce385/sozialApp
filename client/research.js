@@ -467,16 +467,41 @@ async function loadResources() {
   }
 }
 
-// Ressourcen rendern
+// Ressourcen rendern (gruppiert nach Kategorie)
 function renderResources(resources) {
-  resourcesGrid.innerHTML = resources.map(resource => `
-    <div class="resource-card">
-      <div class="res-icon">${resource.icon}</div>
-      <h4>${resource.name}</h4>
-      <p>${resource.desc}</p>
-      <a href="${resource.link}" target="_blank" rel="noopener noreferrer">Besuchen</a>
-    </div>
-  `).join('');
+  const categoryLabels = {
+    organisation: '🏢 Organisationen & Verbände',
+    literatur:    '📚 Kostenlose Fachliteratur & Repositorien',
+    recht:        '⚖️ Gesetze & Recht',
+    statistik:    '📊 Statistik & Forschungsdaten'
+  };
+
+  const order = ['literatur', 'recht', 'statistik', 'organisation'];
+
+  const grouped = {};
+  resources.forEach(r => {
+    const cat = r.category || 'organisation';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(r);
+  });
+
+  resourcesGrid.innerHTML = order
+    .filter(cat => grouped[cat] && grouped[cat].length > 0)
+    .map(cat => `
+      <div class="resource-category">
+        <h3 class="resource-category-title">${categoryLabels[cat] || cat}</h3>
+        <div class="resource-category-grid">
+          ${grouped[cat].map(resource => `
+            <div class="resource-card">
+              <div class="res-icon">${resource.icon}</div>
+              <h4>${resource.name}</h4>
+              <p>${resource.desc}</p>
+              <a href="${resource.link}" target="_blank" rel="noopener noreferrer">→ Öffnen</a>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
 }
 
 // Tab anzeigen

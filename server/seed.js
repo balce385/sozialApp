@@ -289,47 +289,177 @@ const mentorsData = [
 
 // ===== RESSOURCEN =====
 const resourcesData = [
+  // --- Organisationen ---
   {
     icon: '🏛️',
     name: 'DBSH',
     desc: 'Deutscher Berufsverband für Soziale Arbeit – Berufsethik, Stellenangebote, Mitgliedschaft',
-    link: 'https://www.dbsh.de'
-  },
-  {
-    icon: '📊',
-    name: 'Destatis',
-    desc: 'Statistisches Bundesamt – Sozialstatistiken, Armutsdaten, Bevölkerungsdaten',
-    link: 'https://www.destatis.de'
+    link: 'https://www.dbsh.de',
+    category: 'organisation'
   },
   {
     icon: '🏥',
     name: 'Caritas',
     desc: 'Wohlfahrtsverband mit umfangreichen Informationen zu Hilfsangeboten und Praktika',
-    link: 'https://www.caritas.de'
+    link: 'https://www.caritas.de',
+    category: 'organisation'
   },
   {
     icon: '🤝',
     name: 'AWO',
     desc: 'Arbeiterwohlfahrt – Soziale Dienstleistungen, Stellenportal, Ehrenamt',
-    link: 'https://www.awo.org'
-  },
-  {
-    icon: '📋',
-    name: 'BMFSFJ',
-    desc: 'Bundesministerium für Familie – Gesetze, Förderprogramme, Kinder- und Jugendschutz',
-    link: 'https://www.bmfsfj.de'
-  },
-  {
-    icon: '📰',
-    name: 'Socialnet',
-    desc: 'Fachlexikon, Rezensionen und aktuelle Fachinformationen für die Soziale Arbeit',
-    link: 'https://www.socialnet.de'
+    link: 'https://www.awo.org',
+    category: 'organisation'
   },
   {
     icon: '🎓',
     name: 'DZI',
     desc: 'Deutsches Zentralinstitut für soziale Fragen – Spendensiegel, Fachdatenbank',
-    link: 'https://www.dzi.de'
+    link: 'https://www.dzi.de',
+    category: 'organisation'
+  },
+  // --- Kostenlose Literatur & Repositorien ---
+  {
+    icon: '📂',
+    name: 'SSOAR',
+    desc: 'Social Science Open Access Repository – tausende kostenlose Fachartikel und Bücher zu Sozialer Arbeit, Soziologie und Pädagogik',
+    link: 'https://www.ssoar.info',
+    category: 'literatur'
+  },
+  {
+    icon: '🔍',
+    name: 'BASE',
+    desc: 'Bielefeld Academic Search Engine – 300 Mio. Open-Access-Dokumente aus Wissenschaft und Forschung durchsuchen',
+    link: 'https://www.base-search.net',
+    category: 'literatur'
+  },
+  {
+    icon: '🎓',
+    name: 'Google Scholar',
+    desc: 'Wissenschaftliche Suche – findet häufig kostenlose PDF-Versionen von Fachartikeln direkt über den Link',
+    link: 'https://scholar.google.de',
+    category: 'literatur'
+  },
+  {
+    icon: '📚',
+    name: 'OAPEN',
+    desc: 'Open Access-Bücher aus europäischen Wissenschaftsverlagen – viele deutschsprachige Titel kostenlos als PDF',
+    link: 'https://www.oapen.org',
+    category: 'literatur'
+  },
+  {
+    icon: '📖',
+    name: 'pedocs',
+    desc: 'Open-Access-Repositorium für Erziehungswissenschaft und Bildungsforschung – kostenlose Volltexte',
+    link: 'https://www.pedocs.de',
+    category: 'literatur'
+  },
+  {
+    icon: '📰',
+    name: 'Socialnet Lexikon',
+    desc: 'Kostenloses Fachlexikon der Sozialen Arbeit mit über 1.500 Einträgen zu Methoden, Konzepten und Fachbegriffen',
+    link: 'https://www.socialnet.de/lexikon',
+    category: 'literatur'
+  },
+  {
+    icon: '🏫',
+    name: 'DJI Publikationen',
+    desc: 'Deutsches Jugendinstitut – alle Forschungsberichte, Expertisen und Studien zu Kinder- und Jugendhilfe kostenlos als PDF',
+    link: 'https://www.dji.de/publikationen.html',
+    category: 'literatur'
+  },
+  {
+    icon: '🔬',
+    name: 'ISS Frankfurt',
+    desc: 'Institut für Sozialarbeit und Sozialpädagogik – kostenlose Forschungsberichte und Praxismaterialien',
+    link: 'https://www.iss-ffm.de/publikationen',
+    category: 'literatur'
+  },
+  {
+    icon: '🌍',
+    name: 'DOAJ',
+    desc: 'Directory of Open Access Journals – Verzeichnis von über 20.000 begutachteten Open-Access-Fachzeitschriften weltweit',
+    link: 'https://www.doaj.org',
+    category: 'literatur'
+  },
+  {
+    icon: '💊',
+    name: 'BZgA Publikationen',
+    desc: 'Bundeszentrale für gesundheitliche Aufklärung – kostenlose Materialien zu Sucht, Prävention und Gesundheitsförderung',
+    link: 'https://www.bzga.de/infomaterialien',
+    category: 'literatur'
+  },
+  {
+    icon: '🧒',
+    name: 'AGJ Publikationen',
+    desc: 'Arbeitsgemeinschaft für Kinder- und Jugendhilfe – Stellungnahmen, Empfehlungen und Fachbeiträge kostenlos',
+    link: 'https://www.agj.de/publikationen.html',
+    category: 'literatur'
+  },
+  {
+    icon: '🏠',
+    name: 'Paritätischer Wohlfahrtsverband',
+    desc: 'Fachpublikationen zu Armut, Pflege, Behinderung und Sozialrecht – viele Berichte kostenlos downloadbar',
+    link: 'https://www.der-paritaetische.de/publikationen',
+    category: 'literatur'
+  },
+  // --- Recht & Gesetze ---
+  {
+    icon: '⚖️',
+    name: 'Gesetze im Internet',
+    desc: 'Alle deutschen Gesetze kostenlos im Volltext – SGB I–XII, BGB, StGB und mehr. Offizielle Quelle des BMJV',
+    link: 'https://www.gesetze-im-internet.de',
+    category: 'recht'
+  },
+  {
+    icon: '👶',
+    name: 'SGB VIII (KJHG)',
+    desc: 'Sozialgesetzbuch VIII – Kinder- und Jugendhilfe – vollständiger Gesetzestext direkt abrufbar',
+    link: 'https://www.gesetze-im-internet.de/sgb_8',
+    category: 'recht'
+  },
+  {
+    icon: '💶',
+    name: 'SGB II (Bürgergeld)',
+    desc: 'Sozialgesetzbuch II – Grundsicherung für Arbeitsuchende – vollständiger Gesetzestext',
+    link: 'https://www.gesetze-im-internet.de/sgb_2',
+    category: 'recht'
+  },
+  {
+    icon: '🧓',
+    name: 'SGB XI (Pflege)',
+    desc: 'Sozialgesetzbuch XI – Soziale Pflegeversicherung – vollständiger Gesetzestext',
+    link: 'https://www.gesetze-im-internet.de/sgb_11',
+    category: 'recht'
+  },
+  {
+    icon: '📋',
+    name: 'BMFSFJ Publikationen',
+    desc: 'Bundesministerium für Familie – Kinder- und Jugendberichte, Familienberichte, alle Studien kostenlos',
+    link: 'https://www.bmfsfj.de/bmfsfj/publikationen',
+    category: 'recht'
+  },
+  // --- Statistik & Daten ---
+  {
+    icon: '📊',
+    name: 'Destatis',
+    desc: 'Statistisches Bundesamt – Sozialstatistiken, Armutsdaten, Bevölkerungsdaten und Zeitreihen kostenlos',
+    link: 'https://www.destatis.de',
+    category: 'statistik'
+  },
+  {
+    icon: '🗺️',
+    name: 'Regionaldatenbank',
+    desc: 'Statistische Daten auf Kreis- und Gemeindeebene – für sozialräumliche Analysen im Studium und Praktikum',
+    link: 'https://www.regionalstatistik.de',
+    category: 'statistik'
+  },
+  {
+    icon: '📈',
+    name: 'BAMF Migrationsberichte',
+    desc: 'Bundesamt für Migration – jährliche Migrationsberichte, Studien und Statistiken kostenlos als PDF',
+    link: 'https://www.bamf.de/DE/Themen/Forschung/forschung-node.html',
+    category: 'statistik'
   }
 ];
 

@@ -464,9 +464,24 @@ body {
 
 /* ===== RESSOURCEN ===== */
 .resources-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.resource-category-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #4a7c59;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e0dbd4;
+}
+
+.resource-category-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .resource-card {
@@ -552,6 +567,7 @@ body.dark .group-info p,
 body.dark .mentor-info p { color: #aaa; }
 body.dark .sub-heading { color: #bbb; }
 
+body.dark .resource-category-title { color: #6aaa7a; border-bottom-color: #333; }
 body.dark .resource-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
 body.dark .resource-card p { color: #aaa; }
 
