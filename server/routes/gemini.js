@@ -2,8 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+// Modelle der Reihe nach versuchen (Fallback-Kette)
+const MODELS = [
+  'gemini-1.5-flash-latest',
+  'gemini-1.5-flash',
+  'gemini-1.5-flash-8b',
+];
+
 // POST /api/gemini/formulierung
-// Formulierungshilfe mit Google Gemini (kostenlose Tier)
 router.post('/formulierung', async (req, res) => {
   const { kontext, aufgabe } = req.body;
 
@@ -16,11 +22,7 @@ router.post('/formulierung', async (req, res) => {
     return res.status(503).json({ msg: 'KI-Dienst nicht konfiguriert (GEMINI_API_KEY fehlt).' });
   }
 
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-    const prompt = `Du bist eine Formulierungshilfe für Studierende der Sozialen Arbeit in Deutschland.
+  const prompt = `Du bist eine Formulierungshilfe für Studierende der Sozialen Arbeit in Deutschland.
 
 Aufgabe: ${aufgabe}
 
@@ -28,20 +30,35 @@ Kontext/Beschreibung: ${kontext}
 
 Formuliere einen professionellen, fachlich korrekten Text auf Deutsch. Verwende die Fachsprache der Sozialen Arbeit. Schreibe klar, präzise und verständlich. Maximal 200 Wörter.`;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+  const genAI = new GoogleGenerativeAI(apiKey);
+  let lastError = null;
 
-    res.json({ text });
-  } catch (err) {
-    console.error('Gemini Fehler:', err.message);
-    let userMsg = 'KI-Anfrage fehlgeschlagen. Bitte später erneut versuchen.';
-    if (err.message && err.message.includes('429')) {
-      userMsg = 'KI-Kontingent aufgebraucht – bitte etwas warten und erneut versuchen.';
-    } else if (err.message && err.message.includes('API_KEY')) {
-      userMsg = 'KI-Dienst nicht konfiguriert (API-Schlüssel fehlt oder ungültig).';
+  for (const modelName of MODELS) {
+    try {
+      console.log(`Gemini: Versuche Modell ${modelName}…`);
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const text = result.response.text();
+      console.log(`Gemini: Erfolg mit ${modelName}`);
+      return res.json({ text });
+    } catch (err) {
+      console.error(`Gemini Fehler (${modelName}):`, err.status || '', err.message?.slice(0, 120));
+      lastError = err;
+      // Bei 429 (Quota) direkt abbrechen – kein anderes Modell hilft
+      if (err.message && err.message.includes('429')) break;
     }
-    res.status(500).json({ msg: userMsg });
   }
+
+  // Alle Modelle fehlgeschlagen
+  let userMsg = 'KI-Anfrage fehlgeschlagen. Bitte später erneut versuchen.';
+  if (lastError?.message?.includes('429')) {
+    userMsg = 'KI-Kontingent aufgebraucht – bitte etwas warten und erneut versuchen.';
+  } else if (lastError?.message?.includes('API_KEY') || lastError?.message?.includes('INVALID')) {
+    userMsg = 'KI-Dienst nicht erreichbar – API-Schlüssel prüfen.';
+  } else if (lastError?.message?.includes('404')) {
+    userMsg = 'KI-Modell nicht verfügbar – bitte den Administrator informieren.';
+  }
+  res.status(500).json({ msg: userMsg });
 });
 
 module.exports = router;
