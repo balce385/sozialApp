@@ -69,8 +69,8 @@
     <!-- ===== TOOLS ===== -->
     <div id="tools-tab" class="tab-content">
       <div class="section-header">
-        <h2>🛠️ Lerntools</h2>
-        <p>Lernkarten, Pomodoro-Timer, Zitatgenerator und mehr</p>
+        <h2>🛠️ Lerntools & Praxishilfen</h2>
+        <p>Lernkarten, Quiz, Dokumentation, KI-Assistenz und mehr</p>
       </div>
 
       <div class="tools-grid">
@@ -106,6 +106,24 @@
               <div id="card-save-msg" class="save-msg"></div>
             </div>
           </details>
+        </div>
+
+        <!-- Quiz-Modus -->
+        <div class="tool-card">
+          <h3>🧠 Quiz-Modus</h3>
+          <div id="quiz-start-view">
+            <p style="font-size:0.85rem;color:#666;margin-bottom:12px">Teste dein Wissen – Multiple Choice aus allen Lernkarten.</p>
+            <button class="btn-primary-sm" onclick="startQuiz()">▶ Quiz starten</button>
+          </div>
+          <div id="quiz-play-view" style="display:none">
+            <p class="quiz-progress" id="quiz-progress">Frage 1/10</p>
+            <p class="quiz-question" id="quiz-question"></p>
+            <div id="quiz-options" class="quiz-options"></div>
+          </div>
+          <div id="quiz-result-view" style="display:none">
+            <div class="quiz-score" id="quiz-score"></div>
+            <button class="btn-primary-sm" onclick="startQuiz()">↺ Nochmal</button>
+          </div>
         </div>
 
         <!-- Pomodoro-Timer -->
@@ -156,6 +174,62 @@
           <textarea id="fall-ziele" placeholder="Interventionsziele…" rows="2"></textarea>
           <button class="btn-primary-sm" onclick="analyzeFall()">Analysieren</button>
           <div id="fall-result" class="result-box"></div>
+        </div>
+
+        <!-- Gesprächsprotokoll -->
+        <div class="tool-card tool-card-wide">
+          <h3>📝 Gesprächsprotokoll</h3>
+          <div class="form-row">
+            <input type="date" id="proto-datum" />
+            <input type="time" id="proto-zeit" />
+            <select id="proto-art">
+              <option>Erstgespräch</option>
+              <option>Folgegespräch</option>
+              <option>Telefonat</option>
+              <option>Hausbesuch</option>
+              <option>Hilfeplan-Gespräch</option>
+              <option>Krisenintervention</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input type="text" id="proto-pseudonym" placeholder="Klient (Pseudonym / Fallkürzel)" />
+            <input type="text" id="proto-ort" placeholder="Ort / Institution" />
+          </div>
+          <textarea id="proto-inhalt" placeholder="Gesprächsinhalt, besprochene Themen, Verlauf…" rows="3"></textarea>
+          <textarea id="proto-schritte" placeholder="Vereinbarte nächste Schritte, Aufgaben, Termine…" rows="2"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-primary-sm" onclick="erstelleProtokoll()">📄 Protokoll erstellen</button>
+            <button class="btn-outline" onclick="protokollDrucken()" id="proto-print-btn" style="display:none">🖨️ Drucken / Kopieren</button>
+          </div>
+          <div id="proto-result" class="result-box proto-output"></div>
+        </div>
+
+        <!-- Hilfeplan -->
+        <div class="tool-card tool-card-wide">
+          <h3>📋 Hilfeplan-Vorlage <small style="font-weight:400;color:#888">(§ 36 SGB VIII)</small></h3>
+          <div class="form-row">
+            <input type="text" id="hp-name" placeholder="Klient (Pseudonym)" />
+            <input type="text" id="hp-geb" placeholder="Geburtsdatum / Alter" />
+            <input type="date" id="hp-datum" />
+          </div>
+          <div class="form-row">
+            <input type="text" id="hp-bezug" placeholder="Bezugsperson / Sorgeberechtigte" />
+            <input type="text" id="hp-fachkraft" placeholder="Zuständige Fachkraft" />
+          </div>
+          <textarea id="hp-problem" placeholder="Problemlage und Ausgangssituation…" rows="2"></textarea>
+          <textarea id="hp-ressourcen" placeholder="Stärken und Ressourcen des Klienten / der Familie…" rows="2"></textarea>
+          <textarea id="hp-ziele" placeholder="Vereinbarte Ziele (konkret, messbar)…" rows="2"></textarea>
+          <textarea id="hp-massnahmen" placeholder="Maßnahmen und Hilfsangebote…" rows="2"></textarea>
+          <div class="form-row">
+            <input type="text" id="hp-hilfeform" placeholder="Hilfeform (z.B. SPFH § 31 SGB VIII)" />
+            <input type="date" id="hp-pruefung" />
+            <label style="font-size:0.82rem;color:#888;align-self:center">Überprüfungstermin</label>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-primary-sm" onclick="erstelleHilfeplan()">📋 Hilfeplan erstellen</button>
+            <button class="btn-outline" onclick="hilfeplanDrucken()" id="hp-print-btn" style="display:none">🖨️ Drucken / Kopieren</button>
+          </div>
+          <div id="hp-result" class="result-box proto-output"></div>
         </div>
 
         <!-- Notenrechner -->

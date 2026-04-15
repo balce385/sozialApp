@@ -267,6 +267,193 @@ function getIntervention(bereich) {
   return interventions[bereich] || 'Individuelle Beratung und Unterstützung';
 }
 
+// ===== QUIZ-MODUS =====
+let quizCards = [];
+let quizIndex = 0;
+let quizScore = 0;
+const QUIZ_COUNT = 10;
+
+function startQuiz() {
+  if (allCards.length < 4) {
+    alert('Mindestens 4 Lernkarten für den Quiz-Modus erforderlich.');
+    return;
+  }
+  quizCards = shuffle([...allCards]).slice(0, Math.min(QUIZ_COUNT, allCards.length));
+  quizIndex = 0;
+  quizScore = 0;
+  document.getElementById('quiz-start-view').style.display  = 'none';
+  document.getElementById('quiz-result-view').style.display = 'none';
+  document.getElementById('quiz-play-view').style.display   = 'block';
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+  if (quizIndex >= quizCards.length) {
+    endQuiz(); return;
+  }
+  const card = quizCards[quizIndex];
+  const others = allCards.filter(c => c._id !== card._id);
+  const wrong = shuffle(others).slice(0, 3).map(c => c.answer);
+  const options = shuffle([card.answer, ...wrong]);
+
+  document.getElementById('quiz-progress').textContent = `Frage ${quizIndex + 1}/${quizCards.length}`;
+  document.getElementById('quiz-question').textContent = card.question;
+
+  document.getElementById('quiz-options').innerHTML = options.map(opt => `
+    <button class="quiz-option" onclick="answerQuiz(this, '${CSS.escape(opt)}', '${CSS.escape(card.answer)}')">
+      ${opt}
+    </button>
+  `).join('');
+}
+
+function answerQuiz(btn, chosen, correct) {
+  const decoded = s => s.replace(/\\./g, c => c[1]);
+  const isCorrect = chosen === correct;
+  if (isCorrect) { quizScore++; btn.classList.add('correct'); }
+  else { btn.classList.add('wrong'); }
+
+  // Richtige Antwort grün markieren
+  document.querySelectorAll('.quiz-option').forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim() === quizCards[quizIndex].answer) b.classList.add('correct');
+  });
+
+  setTimeout(() => { quizIndex++; showQuizQuestion(); }, 1200);
+}
+
+function endQuiz() {
+  document.getElementById('quiz-play-view').style.display   = 'none';
+  document.getElementById('quiz-result-view').style.display = 'block';
+  const pct = Math.round((quizScore / quizCards.length) * 100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '👍' : '📚';
+  document.getElementById('quiz-score').innerHTML =
+    `<div class="quiz-score-circle">${pct}%</div>
+     <p>${emoji} ${quizScore} von ${quizCards.length} richtig</p>
+     <p style="color:#888;font-size:0.85rem">${pct >= 80 ? 'Ausgezeichnet!' : pct >= 60 ? 'Gut gemacht – weiterüben!' : 'Noch etwas üben – du schaffst das!'}</p>`;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ===== GESPRÄCHSPROTOKOLL =====
+function erstelleProtokoll() {
+  const datum    = document.getElementById('proto-datum').value;
+  const zeit     = document.getElementById('proto-zeit').value;
+  const art      = document.getElementById('proto-art').value;
+  const pseudo   = document.getElementById('proto-pseudonym').value.trim();
+  const ort      = document.getElementById('proto-ort').value.trim();
+  const inhalt   = document.getElementById('proto-inhalt').value.trim();
+  const schritte = document.getElementById('proto-schritte').value.trim();
+
+  if (!pseudo || !inhalt) {
+    alert('Bitte mindestens Klient und Gesprächsinhalt ausfüllen.');
+    return;
+  }
+
+  const d = datum ? new Date(datum).toLocaleDateString('de-DE') : '—';
+  const result = document.getElementById('proto-result');
+
+  result.innerHTML = `
+    <div class="proto-header">GESPRÄCHSPROTOKOLL</div>
+    <table class="proto-table">
+      <tr><td>Datum</td><td>${d}${zeit ? ', ' + zeit + ' Uhr' : ''}</td></tr>
+      <tr><td>Art</td><td>${art}</td></tr>
+      <tr><td>Klient</td><td>${pseudo}</td></tr>
+      ${ort ? `<tr><td>Ort</td><td>${ort}</td></tr>` : ''}
+    </table>
+    <div class="proto-section"><strong>Gesprächsinhalt</strong><p>${inhalt.replace(/\n/g,'<br>')}</p></div>
+    ${schritte ? `<div class="proto-section"><strong>Nächste Schritte</strong><p>${schritte.replace(/\n/g,'<br>')}</p></div>` : ''}
+    <div class="proto-footer">Erstellt: ${new Date().toLocaleDateString('de-DE')}</div>
+  `;
+  result.classList.add('show');
+  document.getElementById('proto-print-btn').style.display = 'inline-block';
+}
+
+function protokollDrucken() {
+  const content = document.getElementById('proto-result').innerHTML;
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>Protokoll</title><style>
+    body{font-family:Arial,sans-serif;padding:30px;color:#111;max-width:700px;margin:auto}
+    .proto-header{font-size:1.2rem;font-weight:bold;text-align:center;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
+    .proto-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+    .proto-table td{padding:6px 10px;border:1px solid #ccc;font-size:0.9rem}
+    .proto-table td:first-child{font-weight:bold;width:120px;background:#f5f5f5}
+    .proto-section{margin-bottom:14px}
+    .proto-section strong{display:block;margin-bottom:4px;border-bottom:1px solid #ccc;padding-bottom:3px}
+    .proto-section p{font-size:0.9rem;line-height:1.6;margin:0}
+    .proto-footer{font-size:0.8rem;color:#888;margin-top:20px;text-align:right}
+    @media print{body{padding:10px}}
+  </style></head><body>${content}</body></html>`);
+  w.document.close();
+  w.print();
+}
+
+// ===== HILFEPLAN =====
+function erstelleHilfeplan() {
+  const name       = document.getElementById('hp-name').value.trim();
+  const geb        = document.getElementById('hp-geb').value.trim();
+  const datum      = document.getElementById('hp-datum').value;
+  const bezug      = document.getElementById('hp-bezug').value.trim();
+  const fachkraft  = document.getElementById('hp-fachkraft').value.trim();
+  const problem    = document.getElementById('hp-problem').value.trim();
+  const ressourcen = document.getElementById('hp-ressourcen').value.trim();
+  const ziele      = document.getElementById('hp-ziele').value.trim();
+  const massnahmen = document.getElementById('hp-massnahmen').value.trim();
+  const hilfeform  = document.getElementById('hp-hilfeform').value.trim();
+  const pruefung   = document.getElementById('hp-pruefung').value;
+
+  if (!name || !problem || !ziele) {
+    alert('Bitte mindestens Klient, Problemlage und Ziele ausfüllen.');
+    return;
+  }
+
+  const fmt = v => v ? new Date(v).toLocaleDateString('de-DE') : '—';
+  const result = document.getElementById('hp-result');
+
+  result.innerHTML = `
+    <div class="proto-header">HILFEPLAN § 36 SGB VIII</div>
+    <table class="proto-table">
+      <tr><td>Klient</td><td>${name}</td></tr>
+      ${geb ? `<tr><td>Geburtsdatum</td><td>${geb}</td></tr>` : ''}
+      ${bezug ? `<tr><td>Bezugsperson</td><td>${bezug}</td></tr>` : ''}
+      ${fachkraft ? `<tr><td>Fachkraft</td><td>${fachkraft}</td></tr>` : ''}
+      <tr><td>Datum</td><td>${fmt(datum)}</td></tr>
+      ${hilfeform ? `<tr><td>Hilfeform</td><td>${hilfeform}</td></tr>` : ''}
+    </table>
+    <div class="proto-section"><strong>Problemlage und Ausgangssituation</strong><p>${problem.replace(/\n/g,'<br>')}</p></div>
+    ${ressourcen ? `<div class="proto-section"><strong>Stärken und Ressourcen</strong><p>${ressourcen.replace(/\n/g,'<br>')}</p></div>` : ''}
+    <div class="proto-section"><strong>Vereinbarte Ziele</strong><p>${ziele.replace(/\n/g,'<br>')}</p></div>
+    ${massnahmen ? `<div class="proto-section"><strong>Maßnahmen und Hilfsangebote</strong><p>${massnahmen.replace(/\n/g,'<br>')}</p></div>` : ''}
+    <div class="proto-footer">Überprüfungstermin: ${fmt(pruefung)} &nbsp;|&nbsp; Erstellt: ${new Date().toLocaleDateString('de-DE')}</div>
+  `;
+  result.classList.add('show');
+  document.getElementById('hp-print-btn').style.display = 'inline-block';
+}
+
+function hilfeplanDrucken() {
+  const content = document.getElementById('hp-result').innerHTML;
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>Hilfeplan</title><style>
+    body{font-family:Arial,sans-serif;padding:30px;color:#111;max-width:700px;margin:auto}
+    .proto-header{font-size:1.2rem;font-weight:bold;text-align:center;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
+    .proto-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+    .proto-table td{padding:6px 10px;border:1px solid #ccc;font-size:0.9rem}
+    .proto-table td:first-child{font-weight:bold;width:140px;background:#f5f5f5}
+    .proto-section{margin-bottom:14px}
+    .proto-section strong{display:block;margin-bottom:4px;border-bottom:1px solid #ccc;padding-bottom:3px}
+    .proto-section p{font-size:0.9rem;line-height:1.6;margin:0}
+    .proto-footer{font-size:0.8rem;color:#888;margin-top:20px;border-top:1px solid #ccc;padding-top:8px}
+    @media print{body{padding:10px}}
+  </style></head><body>${content}</body></html>`);
+  w.document.close();
+  w.print();
+}
+
 // Eigene Lernkarte erstellen
 async function createFlashcard() {
   const question = document.getElementById('new-card-question').value.trim();
