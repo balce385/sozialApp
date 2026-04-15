@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lernen & Forschen – sozial.app</title>
+  <title>Lernen – sozial.app</title>
   <meta name="theme-color" content="#4a7c59" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="sozial.app" />
@@ -13,64 +13,29 @@
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar">
-    <span class="nav-logo">sozial.app</span>
-    <div class="nav-links">
-      <a href="index.html" class="nav-btn">🏠 Feed</a>
-      <span class="nav-btn nav-active">📚 Lernen</span>
-      <button class="nav-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-    </div>
-  </nav>
+  <!-- ===== APP-HEADER ===== -->
+  <header class="app-header">
+    <a href="index.html" class="app-logo">sozial.app</a>
+    <button class="icon-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  </header>
 
   <div class="research-layout">
 
-    <!-- Tab-Navigation -->
+    <!-- ===== TAB-NAVIGATION (Chronologisch) ===== -->
     <div class="tab-nav">
-      <button class="tab active" onclick="showTab('library')">📖 Bibliothek</button>
-      <button class="tab" onclick="showTab('cases')">📋 Fallstudien</button>
-      <button class="tab" onclick="showTab('tools')">🛠️ Tools</button>
-      <button class="tab" onclick="showTab('network')">🤝 Netzwerk</button>
-      <button class="tab" onclick="showTab('resources')">🔗 Ressourcen</button>
+      <button class="tab active" onclick="showTab('lernen')">📚 Lernen</button>
+      <button class="tab" onclick="showTab('wissen')">📖 Wissen</button>
+      <button class="tab" onclick="showTab('praxis')">🛠️ Praxis</button>
+      <button class="tab" onclick="showTab('akademisch')">✍️ Akademisch</button>
+      <button class="tab" onclick="showTab('ki')">🤖 KI</button>
+      <button class="tab" onclick="showTab('netzwerk')">🌐 Mehr</button>
     </div>
 
-    <!-- ===== BIBLIOTHEK ===== -->
-    <div id="library-tab" class="tab-content active">
+    <!-- ===== 1. LERNEN (Einstieg in die Lernsession) ===== -->
+    <div id="lernen-tab" class="tab-content active">
       <div class="section-header">
-        <h2>📖 Fachbibliothek</h2>
-        <p>Bücher, Artikel und Fachpublikationen zur Sozialen Arbeit</p>
-      </div>
-      <div class="search-bar">
-        <input type="text" id="lib-search" placeholder="Titel, Autor oder Stichwort suchen…" oninput="searchLibrary()" />
-      </div>
-      <div class="filter-row">
-        <button class="filter-btn active" data-category="all" onclick="filterLib('all')">Alle</button>
-        <button class="filter-btn" data-category="sozialarbeit" onclick="filterLib('sozialarbeit')">Soziale Arbeit</button>
-        <button class="filter-btn" data-category="psychologie" onclick="filterLib('psychologie')">Psychologie</button>
-        <button class="filter-btn" data-category="recht" onclick="filterLib('recht')">Recht</button>
-        <button class="filter-btn" data-category="methoden" onclick="filterLib('methoden')">Methoden</button>
-      </div>
-      <div id="library-results" class="card-grid">
-        <p class="empty-hint">Bibliothek wird geladen…</p>
-      </div>
-    </div>
-
-    <!-- ===== FALLSTUDIEN ===== -->
-    <div id="cases-tab" class="tab-content">
-      <div class="section-header">
-        <h2>📋 Fallstudien</h2>
-        <p>Reale Fälle aus der Sozialen Arbeit zur Analyse und zum Lernen</p>
-      </div>
-      <div id="case-results" class="card-grid">
-        <p class="empty-hint">Fallstudien werden geladen…</p>
-      </div>
-    </div>
-
-    <!-- ===== TOOLS ===== -->
-    <div id="tools-tab" class="tab-content">
-      <div class="section-header">
-        <h2>🛠️ Lerntools & Praxishilfen</h2>
-        <p>Lernkarten, Quiz, Dokumentation, KI-Assistenz und mehr</p>
+        <h2>📚 Lernen & Üben</h2>
+        <p>Starte deine Lernsession mit Karten, Quiz und Timer</p>
       </div>
 
       <div class="tools-grid">
@@ -96,7 +61,6 @@
             <button class="btn-outline" onclick="flipCard()">Umdrehen</button>
             <button class="btn-outline" onclick="nextCard()">Weiter →</button>
           </div>
-          <!-- Eigene Karte hinzufügen -->
           <details class="add-card-section">
             <summary>➕ Eigene Karte hinzufügen</summary>
             <div class="add-card-form">
@@ -137,24 +101,52 @@
           </div>
         </div>
 
-        <!-- Zitatgenerator -->
-        <div class="tool-card tool-card-wide">
-          <h3>📝 APA-Zitatgenerator</h3>
-          <div class="form-row">
-            <select id="cite-type">
-              <option value="buch">Buch</option>
-              <option value="artikel">Artikel</option>
-            </select>
-            <input type="text" id="cite-author" placeholder="Autor (Nachname, V.)" />
-            <input type="text" id="cite-year" placeholder="Jahr" style="max-width:100px" />
-          </div>
-          <div class="form-row">
-            <input type="text" id="cite-title" placeholder="Titel" />
-            <input type="text" id="cite-publisher" placeholder="Verlag / Zeitschrift" />
-          </div>
-          <button class="btn-primary-sm" onclick="generateCitation()">Zitat generieren</button>
-          <div id="citation-result" class="result-box"></div>
+      </div>
+    </div>
+
+    <!-- ===== 2. WISSEN (Bibliothek + Fallstudien) ===== -->
+    <div id="wissen-tab" class="tab-content">
+      <div class="section-header">
+        <h2>📖 Wissen aufbauen</h2>
+        <p>Fachbibliothek und reale Fallstudien zur Sozialen Arbeit</p>
+      </div>
+
+      <!-- Bibliothek -->
+      <div class="sub-section">
+        <h3 class="sub-heading">📖 Fachbibliothek</h3>
+        <div class="search-bar">
+          <input type="text" id="lib-search" placeholder="Titel, Autor oder Stichwort suchen…" oninput="searchLibrary()" />
         </div>
+        <div class="filter-row">
+          <button class="filter-btn active" data-category="all" onclick="filterLib('all')">Alle</button>
+          <button class="filter-btn" data-category="sozialarbeit" onclick="filterLib('sozialarbeit')">Soziale Arbeit</button>
+          <button class="filter-btn" data-category="psychologie" onclick="filterLib('psychologie')">Psychologie</button>
+          <button class="filter-btn" data-category="recht" onclick="filterLib('recht')">Recht</button>
+          <button class="filter-btn" data-category="methoden" onclick="filterLib('methoden')">Methoden</button>
+        </div>
+        <div id="library-results" class="card-grid">
+          <p class="empty-hint">Bibliothek wird geladen…</p>
+        </div>
+      </div>
+
+      <!-- Fallstudien -->
+      <div class="sub-section">
+        <h3 class="sub-heading">📋 Fallstudien</h3>
+        <p class="sub-desc">Reale Fälle aus der Sozialen Arbeit zur Analyse und zum Lernen</p>
+        <div id="case-results" class="card-grid">
+          <p class="empty-hint">Fallstudien werden geladen…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3. PRAXIS (Praktische Dokumentation) ===== -->
+    <div id="praxis-tab" class="tab-content">
+      <div class="section-header">
+        <h2>🛠️ Praxistools</h2>
+        <p>Fallanalyse, Protokolle und Hilfepläne für die praktische Arbeit</p>
+      </div>
+
+      <div class="tools-grid">
 
         <!-- Fallanalyse -->
         <div class="tool-card tool-card-wide">
@@ -232,31 +224,35 @@
           <div id="hp-result" class="result-box proto-output"></div>
         </div>
 
-        <!-- Notenrechner -->
-        <div class="tool-card">
-          <h3>🎓 Notenrechner</h3>
-          <div class="grade-form">
-            <label>Anzahl Prüfungen
-              <input type="number" id="exam-count" min="1" value="3" />
-            </label>
-            <label>Gewichtung (%)
-              <input type="number" id="exam-weight" min="1" max="100" value="33" />
-            </label>
-            <label>Note (1,0 – 5,0)
-              <input type="number" id="exam-grade" step="0.1" min="1" max="5" value="2.0" />
-            </label>
-          </div>
-          <button class="btn-primary-sm" onclick="calculateGrade()">Berechnen</button>
-          <div id="grade-result" class="result-box"></div>
-        </div>
+      </div>
+    </div>
 
-        <!-- Fachtext-Vereinfacher -->
+    <!-- ===== 4. AKADEMISCH (Schreiben & Notenrechner) ===== -->
+    <div id="akademisch-tab" class="tab-content">
+      <div class="section-header">
+        <h2>✍️ Akademisches Arbeiten</h2>
+        <p>Zitieren, Hausarbeiten schreiben, Texte verstehen und Noten berechnen</p>
+      </div>
+
+      <div class="tools-grid">
+
+        <!-- Zitatgenerator -->
         <div class="tool-card tool-card-wide">
-          <h3>📖 Fachtext-Vereinfacher</h3>
-          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Füge einen komplexen Gesetzestext, Fachbegriff oder Paragraphen ein – die KI erklärt ihn verständlich auf Studienniveau.</p>
-          <textarea id="vereinfach-text" placeholder="Text einfügen, z.B. § 8a SGB VIII Absatz 1: »Werden dem Jugendamt gewichtige Anhaltspunkte…«" rows="4"></textarea>
-          <button class="btn-primary-sm" onclick="vereinfacheText()" id="vereinfach-btn">📖 Vereinfachen</button>
-          <div id="vereinfach-result" class="result-box"></div>
+          <h3>📝 APA-Zitatgenerator</h3>
+          <div class="form-row">
+            <select id="cite-type">
+              <option value="buch">Buch</option>
+              <option value="artikel">Artikel</option>
+            </select>
+            <input type="text" id="cite-author" placeholder="Autor (Nachname, V.)" />
+            <input type="text" id="cite-year" placeholder="Jahr" style="max-width:100px" />
+          </div>
+          <div class="form-row">
+            <input type="text" id="cite-title" placeholder="Titel" />
+            <input type="text" id="cite-publisher" placeholder="Verlag / Zeitschrift" />
+          </div>
+          <button class="btn-primary-sm" onclick="generateCitation()">Zitat generieren</button>
+          <div id="citation-result" class="result-box"></div>
         </div>
 
         <!-- Hausarbeits-Assistent -->
@@ -280,6 +276,45 @@
           <div id="hausarbeit-result" class="result-box"></div>
         </div>
 
+        <!-- Fachtext-Vereinfacher -->
+        <div class="tool-card tool-card-wide">
+          <h3>📖 Fachtext-Vereinfacher</h3>
+          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Füge einen komplexen Gesetzestext, Fachbegriff oder Paragraphen ein – die KI erklärt ihn verständlich auf Studienniveau.</p>
+          <textarea id="vereinfach-text" placeholder="Text einfügen, z.B. § 8a SGB VIII Absatz 1: »Werden dem Jugendamt gewichtige Anhaltspunkte…«" rows="4"></textarea>
+          <button class="btn-primary-sm" onclick="vereinfacheText()" id="vereinfach-btn">📖 Vereinfachen</button>
+          <div id="vereinfach-result" class="result-box"></div>
+        </div>
+
+        <!-- Notenrechner -->
+        <div class="tool-card">
+          <h3>🎓 Notenrechner</h3>
+          <div class="grade-form">
+            <label>Anzahl Prüfungen
+              <input type="number" id="exam-count" min="1" value="3" />
+            </label>
+            <label>Gewichtung (%)
+              <input type="number" id="exam-weight" min="1" max="100" value="33" />
+            </label>
+            <label>Note (1,0 – 5,0)
+              <input type="number" id="exam-grade" step="0.1" min="1" max="5" value="2.0" />
+            </label>
+          </div>
+          <button class="btn-primary-sm" onclick="calculateGrade()">Berechnen</button>
+          <div id="grade-result" class="result-box"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 5. KI-ASSISTENZ ===== -->
+    <div id="ki-tab" class="tab-content">
+      <div class="section-header">
+        <h2>🤖 KI-Assistenz</h2>
+        <p>Falldiagnose und professionelle Formulierungen mit KI-Unterstützung</p>
+      </div>
+
+      <div class="tools-grid">
+
         <!-- Falldiagnose-KI -->
         <div class="tool-card tool-card-wide">
           <h3>🔍 Falldiagnose-KI</h3>
@@ -301,7 +336,7 @@
           <div id="diagnose-result" class="result-box"></div>
         </div>
 
-        <!-- Formulierungshilfe (Gemini KI) -->
+        <!-- Formulierungshilfe -->
         <div class="tool-card tool-card-wide">
           <h3>🤖 Formulierungshilfe (KI)</h3>
           <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Lass dir von der KI professionelle Formulierungen für Berichte, Anträge und Dokumentationen erstellen.</p>
@@ -323,28 +358,27 @@
       </div>
     </div>
 
-    <!-- ===== NETZWERK ===== -->
-    <div id="network-tab" class="tab-content">
+    <!-- ===== 6. NETZWERK & MEHR ===== -->
+    <div id="netzwerk-tab" class="tab-content">
       <div class="section-header">
-        <h2>🤝 Netzwerk</h2>
-        <p>Gruppen und Mentoren für dein Studium</p>
+        <h2>🌐 Netzwerk & Ressourcen</h2>
+        <p>Studiengruppen, Mentoren und kostenlose Fachliteratur</p>
       </div>
-      <h3 class="sub-heading">Studiengruppen</h3>
+
+      <!-- Netzwerk -->
+      <h3 class="sub-heading">🤝 Studiengruppen</h3>
       <div id="groups-container" class="list-container">
         <p class="empty-hint">Gruppen werden geladen…</p>
       </div>
-      <h3 class="sub-heading">Mentoren</h3>
+
+      <h3 class="sub-heading">👤 Mentoren</h3>
       <div id="mentors-container" class="list-container">
         <p class="empty-hint">Mentoren werden geladen…</p>
       </div>
-    </div>
 
-    <!-- ===== RESSOURCEN ===== -->
-    <div id="resources-tab" class="tab-content">
-      <div class="section-header">
-        <h2>🔗 Ressourcen & Freie Literatur</h2>
-        <p>Kostenlose Fachliteratur, Repositorien, Gesetze und nützliche Links – alles direkt zugänglich</p>
-      </div>
+      <!-- Ressourcen -->
+      <h3 class="sub-heading" style="margin-top:28px">🔗 Freie Ressourcen & Links</h3>
+      <p class="sub-desc">Kostenlose Fachliteratur, Repositorien, Gesetze und nützliche Links</p>
       <div id="resources-grid" class="resources-grid">
         <p class="empty-hint">Ressourcen werden geladen…</p>
       </div>
@@ -352,9 +386,29 @@
 
   </div>
 
+  <!-- ===== BOTTOM-NAVIGATION ===== -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-item">
+      <span class="bottom-icon">🏠</span>
+      <span class="bottom-label">Start</span>
+    </a>
+    <a href="research.html" class="bottom-item active">
+      <span class="bottom-icon">📚</span>
+      <span class="bottom-label">Lernen</span>
+    </a>
+    <a href="#" class="bottom-item" onclick="showTab('netzwerk');return false;">
+      <span class="bottom-icon">🤝</span>
+      <span class="bottom-label">Netzwerk</span>
+    </a>
+    <a href="#" class="bottom-item" onclick="showTab('netzwerk');return false;">
+      <span class="bottom-icon">🔗</span>
+      <span class="bottom-label">Links</span>
+    </a>
+  </nav>
+
   <script src="config.js?v=2"></script>
   <script src="darkmode.js?v=1"></script>
-  <script src="research.js?v=2"></script>
+  <script src="research.js?v=3"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/client/sw.js').catch(() => {});

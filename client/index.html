@@ -14,120 +14,107 @@
 </head>
 <body>
 
-  <!-- ===== LOGIN-SEITE ===== -->
-  <div id="login-page" class="page active">
-    <div class="auth-wrapper">
-      <div class="auth-header">
-        <h1>sozial.app</h1>
-        <p>Dein Netzwerk für Soziale Arbeit</p>
-      </div>
-      <div class="auth-card">
-        <h2>Anmelden</h2>
-        <input type="text" id="username" placeholder="Benutzername" autocomplete="username" />
-        <input type="password" id="password" placeholder="Passwort" autocomplete="current-password" />
-        <button class="btn-primary" onclick="login()">Anmelden</button>
-        <p class="auth-switch">
-          Noch kein Konto?
-          <a onclick="showRegister()">Registrieren</a>
-        </p>
+  <!-- ===== APP-HEADER ===== -->
+  <header class="app-header">
+    <span class="app-logo">sozial.app</span>
+    <button class="icon-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  </header>
+
+  <!-- ===== HAUPTINHALT ===== -->
+  <main class="app-main">
+
+    <!-- Hero -->
+    <div class="hero-section">
+      <div class="hero-icon">🎓</div>
+      <h2 class="hero-title">Lernen & Forschen</h2>
+      <p class="hero-sub">Dein digitaler Begleiter für Soziale Arbeit</p>
+    </div>
+
+    <!-- Feature-Karten -->
+    <div class="feature-grid">
+      <a href="research.html#lernen" class="feature-card feature-green">
+        <span class="feat-icon">📚</span>
+        <span class="feat-title">Lernen</span>
+        <span class="feat-desc">Lernkarten & Quiz</span>
+      </a>
+      <a href="research.html#wissen" class="feature-card feature-blue">
+        <span class="feat-icon">📖</span>
+        <span class="feat-title">Wissen</span>
+        <span class="feat-desc">Bibliothek & Fälle</span>
+      </a>
+      <a href="research.html#praxis" class="feature-card feature-orange">
+        <span class="feat-icon">🛠️</span>
+        <span class="feat-title">Praxis</span>
+        <span class="feat-desc">Protokoll & Hilfeplan</span>
+      </a>
+      <a href="research.html#akademisch" class="feature-card feature-purple">
+        <span class="feat-icon">✍️</span>
+        <span class="feat-title">Akademisch</span>
+        <span class="feat-desc">APA-Zitat & Hausarbeit</span>
+      </a>
+      <a href="research.html#ki" class="feature-card feature-teal">
+        <span class="feat-icon">🤖</span>
+        <span class="feat-title">KI-Assistenz</span>
+        <span class="feat-desc">Diagnose & Formulierung</span>
+      </a>
+      <a href="research.html#netzwerk" class="feature-card feature-rose">
+        <span class="feat-icon">🤝</span>
+        <span class="feat-title">Netzwerk</span>
+        <span class="feat-desc">Gruppen & Mentoren</span>
+      </a>
+    </div>
+
+    <!-- Schnellzugriff -->
+    <div class="quick-section">
+      <h3 class="section-label">Schnellzugriff</h3>
+      <div class="quick-list">
+        <a href="research.html#lernen" class="quick-item">
+          <span class="quick-icon">⏱️</span>
+          <span>Pomodoro-Timer starten</span>
+          <span class="quick-arrow">›</span>
+        </a>
+        <a href="research.html#praxis" class="quick-item">
+          <span class="quick-icon">📝</span>
+          <span>Gesprächsprotokoll erstellen</span>
+          <span class="quick-arrow">›</span>
+        </a>
+        <a href="research.html#akademisch" class="quick-item">
+          <span class="quick-icon">🎓</span>
+          <span>Noten berechnen</span>
+          <span class="quick-arrow">›</span>
+        </a>
+        <a href="research.html#netzwerk" class="quick-item">
+          <span class="quick-icon">🔗</span>
+          <span>Freie Ressourcen & Links</span>
+          <span class="quick-arrow">›</span>
+        </a>
       </div>
     </div>
-  </div>
 
-  <!-- ===== REGISTRIERUNGS-SEITE ===== -->
-  <div id="register-page" class="page">
-    <div class="auth-wrapper">
-      <div class="auth-header">
-        <h1>sozial.app</h1>
-        <p>Konto erstellen</p>
-      </div>
-      <div class="auth-card">
-        <h2>Registrieren</h2>
-        <input type="text" id="reg-name" placeholder="Vollständiger Name" autocomplete="name" />
-        <input type="text" id="reg-username" placeholder="Benutzername" autocomplete="username" />
-        <input type="email" id="reg-email" placeholder="E-Mail-Adresse" autocomplete="email" />
-        <input type="password" id="reg-password" placeholder="Passwort (min. 6 Zeichen)" autocomplete="new-password" />
-        <button class="btn-primary" onclick="register()">Konto erstellen</button>
-        <p class="auth-switch">
-          Bereits registriert?
-          <a onclick="showLogin()">Anmelden</a>
-        </p>
-      </div>
-    </div>
-  </div>
+  </main>
 
-  <!-- ===== HAUPTSEITE ===== -->
-  <div id="main-page" class="page">
-
-    <!-- Navigation -->
-    <nav class="navbar">
-      <span class="nav-logo">sozial.app</span>
-      <div class="nav-links">
-        <button class="nav-btn" onclick="showPage('feed')">🏠 Feed</button>
-        <button class="nav-btn" onclick="showPage('profile')">👤 Profil</button>
-        <a href="research.html" class="nav-btn">📚 Lernen</a>
-        <button class="nav-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-        <button class="nav-btn nav-logout" onclick="logout()">Abmelden</button>
-      </div>
-    </nav>
-
-    <div class="main-layout">
-
-      <!-- Profil-Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-card">
-          <div class="sidebar-avatar" id="profile-avatar">🎓</div>
-          <h3 id="profile-name">Name</h3>
-          <p id="profile-username" class="sidebar-username">@username</p>
-          <div class="sidebar-stats">
-            <div>
-              <strong id="followers-count">0</strong>
-              <span>Follower</span>
-            </div>
-            <div>
-              <strong id="following-count">0</strong>
-              <span>Folge ich</span>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Inhaltsbereich -->
-      <main class="content">
-
-        <!-- Feed-Unterseite -->
-        <div id="feed-page" class="sub-page active">
-          <div class="post-composer">
-            <textarea id="post-text" placeholder="Was beschäftigt dich gerade? 📝" rows="3"></textarea>
-            <button class="btn-primary btn-sm" onclick="createPost()">Posten</button>
-          </div>
-          <div id="posts-container">
-            <p class="empty-hint">Feed wird geladen…</p>
-          </div>
-        </div>
-
-        <!-- Profil-Unterseite -->
-        <div id="profile-page" class="sub-page">
-          <div class="profile-edit-card">
-            <h3>Profil bearbeiten</h3>
-            <input type="text" id="profile-name-input" placeholder="Name" />
-            <input type="text" id="profile-bio" placeholder="Bio" />
-            <input type="text" id="profile-emoji" placeholder="Emoji (z.B. 🎓)" maxlength="2" />
-            <button class="btn-primary btn-sm" onclick="updateProfile()">Speichern</button>
-          </div>
-          <h3 class="section-title">Meine Posts</h3>
-          <div id="user-posts-container">
-            <p class="empty-hint">Noch keine Posts</p>
-          </div>
-        </div>
-
-      </main>
-    </div>
-  </div>
+  <!-- ===== BOTTOM-NAVIGATION ===== -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-item active">
+      <span class="bottom-icon">🏠</span>
+      <span class="bottom-label">Start</span>
+    </a>
+    <a href="research.html" class="bottom-item">
+      <span class="bottom-icon">📚</span>
+      <span class="bottom-label">Lernen</span>
+    </a>
+    <a href="research.html#netzwerk" class="bottom-item">
+      <span class="bottom-icon">🤝</span>
+      <span class="bottom-label">Netzwerk</span>
+    </a>
+    <a href="research.html#netzwerk" class="bottom-item">
+      <span class="bottom-icon">🔗</span>
+      <span class="bottom-label">Links</span>
+    </a>
+  </nav>
 
   <script src="config.js?v=2"></script>
   <script src="darkmode.js?v=1"></script>
-  <script src="app.js?v=2"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/client/sw.js').catch(() => {});

@@ -807,20 +807,26 @@ function renderResources(resources) {
 function showTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
-  document.getElementById(`${tab}-tab`).classList.add('active');
+  const tabBtn = document.querySelector(`.tab[onclick="showTab('${tab}')"]`);
+  if (tabBtn) tabBtn.classList.add('active');
+  const tabContent = document.getElementById(`${tab}-tab`);
+  if (tabContent) tabContent.classList.add('active');
 
   switch (tab) {
-    case 'library':   searchLibrary();                    break;
-    case 'cases':     loadCaseStudies();                  break;
-    case 'tools':     loadFlashcards();                   break;
-    case 'network':   loadGroups(); loadMentors();        break;
-    case 'resources': loadResources();                    break;
+    case 'lernen':     loadFlashcards();                          break;
+    case 'wissen':     searchLibrary(); loadCaseStudies();        break;
+    case 'praxis':                                                 break;
+    case 'akademisch':                                             break;
+    case 'ki':                                                     break;
+    case 'netzwerk':   loadGroups(); loadMentors(); loadResources(); break;
   }
 }
 
 // Initialisierung
 window.onload = function() {
   updateTimerDisplay();
-  showTab('library');
+  // Hash-basierte Tab-Auswahl (von index.html-Links)
+  const hash = window.location.hash.replace('#', '');
+  const validTabs = ['lernen', 'wissen', 'praxis', 'akademisch', 'ki', 'netzwerk'];
+  showTab(validTabs.includes(hash) ? hash : 'lernen');
 };

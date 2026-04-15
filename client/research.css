@@ -2,50 +2,114 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f0ebe4;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: #f8f7f5;
   color: #1a1a1a;
   min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 80px;
 }
 
-/* ===== NAVIGATION ===== */
-.navbar {
-  background: #1a1a1a;
-  color: #fff;
+/* ===== APP-HEADER ===== */
+.app-header {
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 20px;
   height: 56px;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid #f0ebe4;
 }
 
-.nav-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.3px; }
+.app-logo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #4a7c59;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
 
-.nav-links { display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  background: #f5f0eb;
+  border: none;
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-.nav-btn {
+.icon-btn:hover { background: #e8e2da; }
+
+/* ===== BOTTOM-NAVIGATION ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid #ede8e1;
+  display: flex;
+  height: 70px;
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-decoration: none;
+  color: #bbb;
+  transition: color 0.2s;
+  padding: 8px 0;
+  cursor: pointer;
   background: none;
   border: none;
-  color: #ccc;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
 }
 
-.nav-btn:hover { background: #333; color: #fff; }
-.nav-active { color: #fff !important; background: #333; }
+.bottom-item.active,
+.bottom-item:hover { color: #4a7c59; }
+
+.bottom-icon { font-size: 1.35rem; line-height: 1; }
+.bottom-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2px; }
 
 /* ===== LAYOUT ===== */
 .research-layout {
-  max-width: 960px;
+  max-width: 480px;
   margin: 0 auto;
-  padding: 20px 16px 40px;
+  padding: 16px 14px 20px;
+}
+
+/* ===== SUBSEKTIONEN ===== */
+.sub-section { margin-bottom: 28px; }
+
+.sub-desc {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 14px;
+  margin-top: 4px;
+}
+
+/* ===== DESKTOP-RAHMEN ===== */
+@media (min-width: 480px) {
+  body { box-shadow: 0 0 60px rgba(0,0,0,0.07); }
 }
 
 /* ===== TABS ===== */
@@ -703,7 +767,17 @@ body {
 }
 
 /* ===== DARK MODE ===== */
-body.dark { background: #111; color: #e8e8e8; }
+body.dark { background: #0f0f0f; color: #e8e8e8; }
+
+body.dark .app-header { background: #1a1a1a; border-bottom-color: #2a2a2a; }
+body.dark .app-logo { color: #6aaa7a; }
+body.dark .icon-btn { background: #2a2a2a; color: #e8e8e8; }
+body.dark .icon-btn:hover { background: #333; }
+
+body.dark .bottom-nav { background: rgba(18,18,18,0.97); border-top-color: #2a2a2a; }
+body.dark .bottom-item { color: #555; }
+body.dark .bottom-item.active,
+body.dark .bottom-item:hover { color: #6aaa7a; }
 
 body.dark .tab { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
 body.dark .tab:hover { background: #2a2a2a; }
@@ -771,6 +845,7 @@ body.dark .resource-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,
 body.dark .resource-card p { color: #aaa; }
 
 body.dark .section-header p { color: #aaa; }
+body.dark .sub-desc { color: #888; }
 body.dark .empty-hint { color: #666; }
 
 /* ===== RESPONSIVE ===== */
