@@ -27,16 +27,24 @@ if (!uri) {
     .catch(err => console.error('MongoDB Verbindungsfehler:', err.message));
 }
 
-// Datenbank automatisch befüllen, wenn sie noch leer ist
+// Datenbank automatisch befüllen, wenn sie noch leer ist oder FORCE_RESEED gesetzt
 async function autoSeed() {
   try {
     const { LibraryItem } = require('./models/Research');
     const count = await LibraryItem.countDocuments();
-    if (count > 0) {
+    const forceReseed = process.env.FORCE_RESEED === 'true';
+
+    if (count > 0 && !forceReseed) {
       console.log(`Datenbank bereits befüllt (${count} Einträge) – Seed übersprungen.`);
       return;
     }
-    console.log('Datenbank ist leer – Seed-Daten werden eingespielt...');
+
+    if (forceReseed) {
+      console.log('FORCE_RESEED=true – Datenbank wird neu befüllt...');
+    } else {
+      console.log('Datenbank ist leer – Seed-Daten werden eingespielt...');
+    }
+
     const { seedDatabase } = require('./seed');
     await seedDatabase();
   } catch (err) {
