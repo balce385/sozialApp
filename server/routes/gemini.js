@@ -4,7 +4,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Modelle der Reihe nach versuchen (Fallback-Kette)
 const MODELS = [
-  'gemini-1.5-flash-latest',
+  'gemini-2.0-flash-lite',
+  'gemini-2.0-flash',
   'gemini-1.5-flash',
   'gemini-1.5-flash-8b',
 ];
@@ -44,8 +45,7 @@ Formuliere einen professionellen, fachlich korrekten Text auf Deutsch. Verwende 
     } catch (err) {
       console.error(`Gemini Fehler (${modelName}):`, err.status || '', err.message?.slice(0, 120));
       lastError = err;
-      // Bei 429 (Quota) direkt abbrechen – kein anderes Modell hilft
-      if (err.message && err.message.includes('429')) break;
+      // Weiter zum nächsten Modell – jedes Modell hat eigenes Quota
     }
   }
 
