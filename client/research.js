@@ -267,6 +267,50 @@ function getIntervention(bereich) {
   return interventions[bereich] || 'Individuelle Beratung und Unterstützung';
 }
 
+// Falldiagnose mit Gemini KI
+async function falldiagnoseKI() {
+  const situation = document.getElementById('diagnose-situation').value.trim();
+  const bereich = document.getElementById('diagnose-bereich').value;
+
+  if (!situation) {
+    alert('Bitte die Fallsituation beschreiben.');
+    return;
+  }
+
+  const btn = document.getElementById('diagnose-btn');
+  const result = document.getElementById('diagnose-result');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Wird analysiert…';
+  result.innerHTML = '';
+  result.classList.remove('show');
+
+  try {
+    const response = await fetch(`${API_URL}/gemini/formulierung`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        aufgabe: `Analysiere diesen Sozialarbeitsfall aus dem Bereich "${bereich}" und gib strukturierte Empfehlungen: 1) Hauptprobleme benennen, 2) passende Methoden und Interventionen vorschlagen, 3) mögliche Hilfsangebote nennen, 4) nächste konkrete Schritte empfehlen.`,
+        kontext: situation
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.msg || 'Anfrage fehlgeschlagen');
+
+    result.innerHTML = `<strong>KI-Fallanalyse:</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
+    result.classList.add('show');
+  } catch (err) {
+    console.error(err);
+    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔍 Analyse starten';
+  }
+}
+
 // Formulierungshilfe mit Gemini KI
 async function geminiFormulierung() {
   const kontext = document.getElementById('gemini-kontext').value.trim();

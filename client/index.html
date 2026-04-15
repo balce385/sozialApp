@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>sozial.app</title>
+  <meta name="theme-color" content="#4a7c59" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="sozial.app" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon.svg" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -60,6 +66,7 @@
         <button class="nav-btn" onclick="showPage('feed')">🏠 Feed</button>
         <button class="nav-btn" onclick="showPage('profile')">👤 Profil</button>
         <a href="research.html" class="nav-btn">📚 Lernen</a>
+        <button class="nav-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
         <button class="nav-btn nav-logout" onclick="logout()">Abmelden</button>
       </div>
     </nav>
@@ -119,6 +126,12 @@
   </div>
 
   <script src="config.js?v=2"></script>
+  <script src="darkmode.js?v=1"></script>
   <script src="app.js?v=2"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/client/sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>

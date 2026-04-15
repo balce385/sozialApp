@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lernen & Forschen – sozial.app</title>
+  <meta name="theme-color" content="#4a7c59" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="sozial.app" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon.svg" />
   <link rel="stylesheet" href="research.css" />
 </head>
 <body>
@@ -14,6 +19,7 @@
     <div class="nav-links">
       <a href="index.html" class="nav-btn">🏠 Feed</a>
       <span class="nav-btn nav-active">📚 Lernen</span>
+      <button class="nav-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
     </div>
   </nav>
 
@@ -160,6 +166,27 @@
           <div id="grade-result" class="result-box"></div>
         </div>
 
+        <!-- Falldiagnose-KI -->
+        <div class="tool-card tool-card-wide">
+          <h3>🔍 Falldiagnose-KI</h3>
+          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Beschreibe einen Fall – die KI schlägt passende Methoden, Interventionen und nächste Schritte vor.</p>
+          <div class="form-row">
+            <select id="diagnose-bereich">
+              <option>Kinder &amp; Jugendhilfe</option>
+              <option>Sozialhilfe</option>
+              <option>Suchtberatung</option>
+              <option>Flüchtlingshilfe</option>
+              <option>Altenbetreuung</option>
+              <option>Schuldnerberatung</option>
+              <option>Psychiatrie &amp; Sozialpsychiatrie</option>
+              <option>Wohnungslosenhilfe</option>
+            </select>
+          </div>
+          <textarea id="diagnose-situation" placeholder="Situation, Problemlage, Ressourcen und Risiken des Klienten beschreiben…" rows="3"></textarea>
+          <button class="btn-primary-sm" onclick="falldiagnoseKI()" id="diagnose-btn">🔍 Analyse starten</button>
+          <div id="diagnose-result" class="result-box"></div>
+        </div>
+
         <!-- Formulierungshilfe (Gemini KI) -->
         <div class="tool-card tool-card-wide">
           <h3>🤖 Formulierungshilfe (KI)</h3>
@@ -212,6 +239,12 @@
   </div>
 
   <script src="config.js?v=2"></script>
+  <script src="darkmode.js?v=1"></script>
   <script src="research.js?v=2"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/client/sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>

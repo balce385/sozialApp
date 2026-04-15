@@ -504,6 +504,60 @@ body {
   font-size: 0.9rem;
 }
 
+/* ===== DARK MODE ===== */
+body.dark { background: #111; color: #e8e8e8; }
+
+body.dark .tab { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
+body.dark .tab:hover { background: #2a2a2a; }
+body.dark .tab.active { background: #4a7c59; border-color: #4a7c59; color: #fff; }
+
+body.dark .search-bar input { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
+body.dark .search-bar input::placeholder { color: #666; }
+
+body.dark .filter-btn { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
+body.dark .filter-btn:hover { background: #2a2a2a; }
+body.dark .filter-btn.active { background: #4a7c59; border-color: #4a7c59; color: #fff; }
+
+body.dark .library-card,
+body.dark .case-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+body.dark .library-card p,
+body.dark .case-card p { color: #bbb; }
+body.dark .library-card small,
+body.dark .case-card small { color: #777; }
+
+body.dark .tool-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+body.dark .flashcard-front { background: #2a2a2a; border-color: #444; color: #e8e8e8; }
+body.dark .timer-display { color: #e8e8e8; }
+
+body.dark .form-row input,
+body.dark .form-row select,
+body.dark .tool-card textarea { background: #252525; border-color: #444; color: #e8e8e8; }
+body.dark .form-row input::placeholder,
+body.dark .tool-card textarea::placeholder { color: #666; }
+body.dark .form-row select option { background: #1e1e1e; }
+
+body.dark .grade-form input { background: #252525; border-color: #444; color: #e8e8e8; }
+body.dark .grade-form label { color: #bbb; }
+
+body.dark .btn-outline { background: #2a2a2a; border-color: #444; color: #e8e8e8; }
+body.dark .btn-outline:hover { background: #333; }
+body.dark .btn-outline-sm { border-color: #444; color: #e8e8e8; }
+body.dark .btn-outline-sm:hover { background: #2a2a2a; }
+
+body.dark .result-box { background: #252525; }
+
+body.dark .group-card,
+body.dark .mentor-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+body.dark .group-info p,
+body.dark .mentor-info p { color: #aaa; }
+body.dark .sub-heading { color: #bbb; }
+
+body.dark .resource-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+body.dark .resource-card p { color: #aaa; }
+
+body.dark .section-header p { color: #aaa; }
+body.dark .empty-hint { color: #666; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .tools-grid { grid-template-columns: 1fr; }
