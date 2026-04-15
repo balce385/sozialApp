@@ -518,7 +518,7 @@ async function vereinfacheText() {
     result.innerHTML = `<strong>Vereinfachte Erklärung:</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
     result.classList.add('show');
   } catch (err) {
-    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.innerHTML = `<strong style="color:#c0392b">Hinweis:</strong> ${err.message}`;
     result.classList.add('show');
   } finally {
     btn.disabled = false;
@@ -552,7 +552,7 @@ async function hausarbeitsAssistent() {
     result.innerHTML = `<strong>${aufgabe.split(' ').slice(0,3).join(' ')}…</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
     result.classList.add('show');
   } catch (err) {
-    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.innerHTML = `<strong style="color:#c0392b">Hinweis:</strong> ${err.message}`;
     result.classList.add('show');
   } finally {
     btn.disabled = false;
@@ -596,7 +596,7 @@ async function falldiagnoseKI() {
     result.classList.add('show');
   } catch (err) {
     console.error(err);
-    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.innerHTML = `<strong style="color:#c0392b">Hinweis:</strong> ${err.message}`;
     result.classList.add('show');
   } finally {
     btn.disabled = false;
@@ -623,27 +623,18 @@ async function geminiFormulierung() {
   result.classList.remove('show');
 
   try {
-    const token = localStorage.getItem('token');
     const response = await fetch(`${API_URL}/gemini/formulierung`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { 'x-auth-token': token } : {})
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ kontext, aufgabe })
     });
-
     const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.msg || 'KI-Anfrage fehlgeschlagen');
-    }
-
+    if (!response.ok) throw new Error(data.msg || 'KI-Anfrage fehlgeschlagen');
     result.innerHTML = `<strong>Formulierungsvorschlag:</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
     result.classList.add('show');
   } catch (err) {
     console.error(err);
-    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.innerHTML = `<strong style="color:#c0392b">Hinweis:</strong> ${err.message}`;
     result.classList.add('show');
   } finally {
     btn.disabled = false;

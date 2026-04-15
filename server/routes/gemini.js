@@ -18,7 +18,7 @@ router.post('/formulierung', async (req, res) => {
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const prompt = `Du bist eine Formulierungshilfe für Studierende der Sozialen Arbeit in Deutschland.
 
@@ -34,7 +34,13 @@ Formuliere einen professionellen, fachlich korrekten Text auf Deutsch. Verwende 
     res.json({ text });
   } catch (err) {
     console.error('Gemini Fehler:', err.message);
-    res.status(500).json({ msg: 'Fehler bei der KI-Anfrage: ' + err.message });
+    let userMsg = 'KI-Anfrage fehlgeschlagen. Bitte später erneut versuchen.';
+    if (err.message && err.message.includes('429')) {
+      userMsg = 'KI-Kontingent aufgebraucht – bitte etwas warten und erneut versuchen.';
+    } else if (err.message && err.message.includes('API_KEY')) {
+      userMsg = 'KI-Dienst nicht konfiguriert (API-Schlüssel fehlt oder ungültig).';
+    }
+    res.status(500).json({ msg: userMsg });
   }
 });
 
