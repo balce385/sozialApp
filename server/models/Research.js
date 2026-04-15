@@ -7,7 +7,9 @@ const libraryItemSchema = new mongoose.Schema({
   category: { type: String, required: true },
   publisher: { type: String, required: true },
   description: { type: String, required: true },
-  pages: { type: Number, required: true }
+  pages: { type: Number, required: true },
+  freeLink: { type: String, default: '' },
+  link: { type: String, default: '' }
 });
 
 const caseStudySchema = new mongoose.Schema({

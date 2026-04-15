@@ -28,6 +28,7 @@ const usersData = [
 
 // ===== BIBLIOTHEK =====
 const libraryData = [
+  // ---- Bestehende Bücher mit Links ----
   {
     title: 'Grundriss Soziale Arbeit',
     author: 'Thole, W.',
@@ -35,7 +36,9 @@ const libraryData = [
     category: 'sozialarbeit',
     publisher: 'VS Verlag',
     description: 'Umfassendes Standardwerk der Sozialen Arbeit mit Beiträgen zu Geschichte, Theorie und Praxis.',
-    pages: 1064
+    pages: 1064,
+    link: 'https://www.springer.com/book/9783531175065',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=soziale+arbeit+thole'
   },
   {
     title: 'Methoden der Sozialen Arbeit',
@@ -44,7 +47,9 @@ const libraryData = [
     category: 'methoden',
     publisher: 'Juventa Verlag',
     description: 'Systematische Einführung in die wichtigsten Methoden der Sozialen Arbeit von Beratung bis Gruppenarbeit.',
-    pages: 320
+    pages: 320,
+    link: 'https://www.beltz.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=methoden+soziale+arbeit'
   },
   {
     title: 'Sozialgesetzbuch – Kommentar für die Praxis',
@@ -53,7 +58,9 @@ const libraryData = [
     category: 'recht',
     publisher: 'Luchterhand Verlag',
     description: 'Praxiskommentar zu den wichtigsten Sozialgesetzbüchern (SGB II, VIII, XII) für Fachkräfte.',
-    pages: 892
+    pages: 892,
+    link: 'https://www.wolterskluwer.com/de',
+    freeLink: 'https://www.gesetze-im-internet.de'
   },
   {
     title: 'Psychologie für Soziale Arbeit',
@@ -62,7 +69,9 @@ const libraryData = [
     category: 'psychologie',
     publisher: 'Nomos Verlag',
     description: 'Einführung in psychologische Grundlagen für die Soziale Arbeit: Entwicklungspsychologie, klinische Psychologie und Beratung.',
-    pages: 456
+    pages: 456,
+    link: 'https://www.nomos-shop.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=psychologie+soziale+arbeit'
   },
   {
     title: 'Systemische Beratung und Therapie',
@@ -71,7 +80,9 @@ const libraryData = [
     category: 'methoden',
     publisher: 'Vandenhoeck & Ruprecht',
     description: 'Klassisches Lehrbuch der systemischen Praxis mit Fokus auf Familien- und Organisationsberatung.',
-    pages: 384
+    pages: 384,
+    link: 'https://www.vandenhoeck-ruprecht-verlage.com',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=systemische+beratung+soziale+arbeit'
   },
   {
     title: 'Empowerment in der Sozialen Arbeit',
@@ -80,7 +91,9 @@ const libraryData = [
     category: 'sozialarbeit',
     publisher: 'Kohlhammer Verlag',
     description: 'Theorie und Praxis des Empowerment-Ansatzes: Stärkung von Ressourcen und Selbstbestimmung der Klienten.',
-    pages: 264
+    pages: 264,
+    link: 'https://www.kohlhammer.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=empowerment+soziale+arbeit'
   },
   {
     title: 'Entwicklungspsychologie des Kindes- und Jugendalters',
@@ -89,7 +102,9 @@ const libraryData = [
     category: 'psychologie',
     publisher: 'Springer Verlag',
     description: 'Umfassendes Standardwerk zur psychischen Entwicklung von der Geburt bis zur Adoleszenz.',
-    pages: 736
+    pages: 736,
+    link: 'https://www.springer.com',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=entwicklungspsychologie+kinder'
   },
   {
     title: 'Sozialrecht – Grundkurs',
@@ -98,7 +113,109 @@ const libraryData = [
     category: 'recht',
     publisher: 'Nomos Verlag',
     description: 'Verständliche Einführung ins Sozialrecht für Studierende der Sozialen Arbeit und verwandter Fächer.',
-    pages: 312
+    pages: 312,
+    link: 'https://www.nomos-shop.de',
+    freeLink: 'https://www.gesetze-im-internet.de'
+  },
+  // ---- Neue Bücher & freie Publikationen ----
+  {
+    title: '16. Kinder- und Jugendbericht',
+    author: 'Bundesministerium für Familie (BMFSFJ)',
+    year: 2020,
+    category: 'sozialarbeit',
+    publisher: 'BMFSFJ',
+    description: 'Offizieller Bericht der Bundesregierung zur Lage junger Menschen in Deutschland. Schwerpunkt: Förderung demokratischer Bildung.',
+    pages: 368,
+    freeLink: 'https://www.bmfsfj.de/bmfsjf/service/publikationen/16--kinder--und-jugendbericht-217308',
+    link: 'https://www.bmfsfj.de'
+  },
+  {
+    title: 'Armutsbericht Deutschland',
+    author: 'Der Paritätische Gesamtverband',
+    year: 2023,
+    category: 'sozialarbeit',
+    publisher: 'Paritätischer Wohlfahrtsverband',
+    description: 'Jährlicher Bericht zur Armutsentwicklung in Deutschland mit regionalen Daten, Analysen und sozialpolitischen Forderungen.',
+    pages: 80,
+    freeLink: 'https://www.der-paritaetische.de/publikationen/armutsbericht',
+    link: 'https://www.der-paritaetische.de'
+  },
+  {
+    title: 'Handbuch Kinder- und Jugendhilfe',
+    author: 'Schröer, W. et al.',
+    year: 2022,
+    category: 'sozialarbeit',
+    publisher: 'Juventa Verlag',
+    description: 'Umfassendes Nachschlagewerk zu allen Bereichen der Kinder- und Jugendhilfe – von ASD bis Heimerziehung.',
+    pages: 1200,
+    link: 'https://www.beltz.de',
+    freeLink: 'https://www.dji.de/publikationen.html'
+  },
+  {
+    title: 'Soziale Arbeit und Menschenrechte',
+    author: 'Staub-Bernasconi, S.',
+    year: 2019,
+    category: 'sozialarbeit',
+    publisher: 'Barbara Budrich Verlag',
+    description: 'Menschenrechte als Grundlage und Mandat Sozialer Arbeit – theoretische Fundierung und praktische Konsequenzen.',
+    pages: 248,
+    link: 'https://www.budrich.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=soziale+arbeit+menschenrechte'
+  },
+  {
+    title: 'Case Management – Grundlagen und Anwendung',
+    author: 'Wendt, W. R.',
+    year: 2021,
+    category: 'methoden',
+    publisher: 'Lambertus Verlag',
+    description: 'Standardwerk zum Case Management: Assessment, Hilfeplanung, Koordination und Evaluation von Hilfeleistungen.',
+    pages: 280,
+    link: 'https://www.lambertus.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=case+management+soziale+arbeit'
+  },
+  {
+    title: 'Flucht, Migration und Soziale Arbeit',
+    author: 'Braches-Chyrek, R. et al.',
+    year: 2020,
+    category: 'sozialarbeit',
+    publisher: 'Barbara Budrich Verlag',
+    description: 'Praxis und Theorie der Sozialen Arbeit mit Geflüchteten: interkulturelle Kompetenz, Rechtsgrundlagen, Handlungsansätze.',
+    pages: 290,
+    link: 'https://www.budrich.de',
+    freeLink: 'https://www.ssoar.info/ssoar/discover?query=migration+flucht+soziale+arbeit'
+  },
+  {
+    title: 'Sucht und Soziale Arbeit',
+    author: 'Stimmer, F. & Müller-Teusler, S.',
+    year: 2018,
+    category: 'methoden',
+    publisher: 'Kohlhammer Verlag',
+    description: 'Grundlagen der Suchtberatung und Suchthilfe: Abhängigkeitserkrankungen, motivierende Gesprächsführung, Interventionsplanung.',
+    pages: 240,
+    link: 'https://www.kohlhammer.de',
+    freeLink: 'https://www.bzga.de/infomaterialien/suchtvorbeugung'
+  },
+  {
+    title: 'Kindeswohlgefährdung erkennen und helfen',
+    author: 'Kindler, H. et al.',
+    year: 2019,
+    category: 'recht',
+    publisher: 'Juventa Verlag',
+    description: 'Praxisorientiertes Handbuch zum Schutzauftrag nach § 8a SGB VIII – Risikoeinschätzung, Kooperation und Intervention.',
+    pages: 320,
+    link: 'https://www.beltz.de',
+    freeLink: 'https://www.dji.de/ueber-das-dji/abteilungen/jugend-und-jugendhilfe/pf/projekte/kinderschutz.html'
+  },
+  {
+    title: 'Berufsethik der Sozialen Arbeit',
+    author: 'DBSH (Hrsg.)',
+    year: 2021,
+    category: 'sozialarbeit',
+    publisher: 'DBSH',
+    description: 'Offizielle Berufsethik des Deutschen Berufsverbands für Soziale Arbeit – Grundwerte, Prinzipien und ethische Richtlinien.',
+    pages: 48,
+    freeLink: 'https://www.dbsh.de/profession/berufsethik.html',
+    link: 'https://www.dbsh.de'
   }
 ];
 

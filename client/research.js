@@ -59,6 +59,10 @@ function renderLibraryItems(items) {
         <p><strong>Kategorie:</strong> ${getCategoryName(item.category)}</p>
         <p>${item.description}</p>
         <p><small>${item.pages} Seiten</small></p>
+        <div class="library-links">
+          ${item.freeLink ? `<a href="${item.freeLink}" target="_blank" rel="noopener noreferrer" class="lib-btn lib-btn-free">📖 Kostenlos lesen</a>` : ''}
+          ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="lib-btn lib-btn-info">ℹ️ Infos & Kauf</a>` : ''}
+        </div>
       </div>
     `).join('');
 }
