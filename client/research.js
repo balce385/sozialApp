@@ -267,6 +267,114 @@ function getIntervention(bereich) {
   return interventions[bereich] || 'Individuelle Beratung und Unterstützung';
 }
 
+// Eigene Lernkarte erstellen
+async function createFlashcard() {
+  const question = document.getElementById('new-card-question').value.trim();
+  const answer = document.getElementById('new-card-answer').value.trim();
+  const msg = document.getElementById('card-save-msg');
+
+  if (!question || !answer) {
+    msg.textContent = 'Bitte Frage und Antwort ausfüllen.';
+    msg.className = 'save-msg error';
+    return;
+  }
+
+  const token = localStorage.getItem('token');
+  if (!token) {
+    msg.textContent = 'Bitte zuerst einloggen.';
+    msg.className = 'save-msg error';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/research/flashcards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      body: JSON.stringify({ question, answer })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.msg);
+
+    document.getElementById('new-card-question').value = '';
+    document.getElementById('new-card-answer').value = '';
+    msg.textContent = '✓ Karte gespeichert!';
+    msg.className = 'save-msg success';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+
+    await loadFlashcards(); // Karten neu laden
+  } catch (err) {
+    msg.textContent = 'Fehler: ' + err.message;
+    msg.className = 'save-msg error';
+  }
+}
+
+// Fachtext vereinfachen
+async function vereinfacheText() {
+  const text = document.getElementById('vereinfach-text').value.trim();
+  if (!text) { alert('Bitte Text einfügen.'); return; }
+
+  const btn = document.getElementById('vereinfach-btn');
+  const result = document.getElementById('vereinfach-result');
+  btn.disabled = true;
+  btn.textContent = '⏳ Wird vereinfacht…';
+  result.classList.remove('show');
+
+  try {
+    const response = await fetch(`${API_URL}/gemini/formulierung`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        aufgabe: 'Erkläre diesen Fachtext oder Gesetzestext in einfacher, verständlicher Sprache für Studierende der Sozialen Arbeit im 1.–4. Semester. Nutze Alltagssprache, erkläre Fachbegriffe, gib ein konkretes Beispiel aus der Praxis.',
+        kontext: text
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.msg);
+    result.innerHTML = `<strong>Vereinfachte Erklärung:</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
+    result.classList.add('show');
+  } catch (err) {
+    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📖 Vereinfachen';
+  }
+}
+
+// Hausarbeits-Assistent
+async function hausarbeitsAssistent() {
+  const thema = document.getElementById('hausarbeit-thema').value.trim();
+  const aufgabe = document.getElementById('hausarbeit-aufgabe').value;
+  if (!thema) { alert('Bitte Thema eingeben.'); return; }
+
+  const btn = document.getElementById('hausarbeit-btn');
+  const result = document.getElementById('hausarbeit-result');
+  btn.disabled = true;
+  btn.textContent = '⏳ Wird erstellt…';
+  result.classList.remove('show');
+
+  try {
+    const response = await fetch(`${API_URL}/gemini/formulierung`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        aufgabe: `${aufgabe} für eine wissenschaftliche Hausarbeit im Studiengang Soziale Arbeit (Bachelor-Niveau, Deutschland). Nutze Fachsprache der Sozialen Arbeit, beziehe dich auf relevante Theorien, Gesetze und aktuelle Diskurse.`,
+        kontext: `Thema der Hausarbeit: ${thema}`
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.msg);
+    result.innerHTML = `<strong>${aufgabe.split(' ').slice(0,3).join(' ')}…</strong><br><br>${data.text.replace(/\n/g, '<br>')}`;
+    result.classList.add('show');
+  } catch (err) {
+    result.innerHTML = `<span style="color:red">Fehler: ${err.message}</span>`;
+    result.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✍️ Generieren';
+  }
+}
+
 // Falldiagnose mit Gemini KI
 async function falldiagnoseKI() {
   const situation = document.getElementById('diagnose-situation').value.trim();

@@ -96,6 +96,16 @@
             <button class="btn-outline" onclick="flipCard()">Umdrehen</button>
             <button class="btn-outline" onclick="nextCard()">Weiter →</button>
           </div>
+          <!-- Eigene Karte hinzufügen -->
+          <details class="add-card-section">
+            <summary>➕ Eigene Karte hinzufügen</summary>
+            <div class="add-card-form">
+              <input type="text" id="new-card-question" placeholder="Frage / Begriff" maxlength="200" />
+              <textarea id="new-card-answer" placeholder="Antwort / Erklärung" rows="2" maxlength="500"></textarea>
+              <button class="btn-primary-sm" onclick="createFlashcard()">Karte speichern</button>
+              <div id="card-save-msg" class="save-msg"></div>
+            </div>
+          </details>
         </div>
 
         <!-- Pomodoro-Timer -->
@@ -164,6 +174,36 @@
           </div>
           <button class="btn-primary-sm" onclick="calculateGrade()">Berechnen</button>
           <div id="grade-result" class="result-box"></div>
+        </div>
+
+        <!-- Fachtext-Vereinfacher -->
+        <div class="tool-card tool-card-wide">
+          <h3>📖 Fachtext-Vereinfacher</h3>
+          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">Füge einen komplexen Gesetzestext, Fachbegriff oder Paragraphen ein – die KI erklärt ihn verständlich auf Studienniveau.</p>
+          <textarea id="vereinfach-text" placeholder="Text einfügen, z.B. § 8a SGB VIII Absatz 1: »Werden dem Jugendamt gewichtige Anhaltspunkte…«" rows="4"></textarea>
+          <button class="btn-primary-sm" onclick="vereinfacheText()" id="vereinfach-btn">📖 Vereinfachen</button>
+          <div id="vereinfach-result" class="result-box"></div>
+        </div>
+
+        <!-- Hausarbeits-Assistent -->
+        <div class="tool-card tool-card-wide">
+          <h3>✍️ Hausarbeits-Assistent</h3>
+          <p style="color:#666;font-size:0.85rem;margin-bottom:0.75rem">KI-Unterstützung für wissenschaftliche Arbeiten in der Sozialen Arbeit.</p>
+          <div class="form-row">
+            <input type="text" id="hausarbeit-thema" placeholder="Thema der Hausarbeit, z.B. »Empowerment in der Suchtberatung«" />
+          </div>
+          <div class="form-row">
+            <select id="hausarbeit-aufgabe">
+              <option value="Erstelle eine detaillierte Gliederung">📋 Gliederung erstellen</option>
+              <option value="Entwickle eine wissenschaftliche Fragestellung und Hypothesen">❓ Fragestellung entwickeln</option>
+              <option value="Schreibe eine wissenschaftliche Einleitung">📝 Einleitung formulieren</option>
+              <option value="Schreibe ein wissenschaftliches Fazit und Ausblick">🏁 Fazit & Ausblick</option>
+              <option value="Schlage relevante Fachliteratur und Autoren vor">📚 Literatur vorschlagen</option>
+              <option value="Erkläre die wichtigsten Theorien und Konzepte zu diesem Thema">🔬 Theorien & Konzepte</option>
+            </select>
+          </div>
+          <button class="btn-primary-sm" onclick="hausarbeitsAssistent()" id="hausarbeit-btn">✍️ Generieren</button>
+          <div id="hausarbeit-result" class="result-box"></div>
         </div>
 
         <!-- Falldiagnose-KI -->
