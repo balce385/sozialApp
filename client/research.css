@@ -92,9 +92,7 @@ body {
 
 /* ===== LAYOUT ===== */
 .research-layout {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px 14px 20px;
+  padding: 14px 14px 20px;
 }
 
 /* ===== SUBSEKTIONEN ===== */
@@ -115,10 +113,10 @@ body {
 /* ===== TABS ===== */
 .tab-nav {
   display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 6px;
+  margin-bottom: 18px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 2px 0 6px;
   scrollbar-width: none;
 }
 
@@ -126,21 +124,46 @@ body {
 
 .tab {
   background: #fff;
-  border: 1.5px solid #e0dbd4;
-  border-radius: 10px;
-  padding: 10px 18px;
-  font-size: 0.9rem;
+  border: 1.5px solid #e8e3dc;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
-  font-weight: 500;
+  font-weight: 600;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.tab:hover { background: #f5f0eb; border-color: #c0b8b0; }
+.tab-step {
+  background: #e8e3dc;
+  color: #888;
+  font-size: 0.65rem;
+  font-weight: 800;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tab:hover { background: #f5f0eb; border-color: #c8c0b8; color: #333; }
+.tab:hover .tab-step { background: #c8c0b8; }
 
 .tab.active {
   background: #4a7c59;
   border-color: #4a7c59;
+  color: #fff;
+}
+
+.tab.active .tab-step {
+  background: rgba(255,255,255,0.3);
   color: #fff;
 }
 
@@ -153,15 +176,30 @@ body {
   margin-bottom: 20px;
 }
 
+.step-badge {
+  display: inline-block;
+  background: #e6f4ec;
+  color: #4a7c59;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
 .section-header h2 {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.3px;
 }
 
 .section-header p {
   color: #888;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-top: 4px;
+  line-height: 1.4;
 }
 
 /* ===== SUCHLEISTE ===== */
@@ -209,8 +247,8 @@ body {
 /* ===== KARTEN-RASTER ===== */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
 .library-card,
@@ -282,8 +320,8 @@ body {
 /* ===== TOOLS-RASTER ===== */
 .tools-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
 .tool-card {
@@ -295,6 +333,8 @@ body {
   flex-direction: column;
   gap: 14px;
 }
+
+.tool-card-wide { grid-column: span 1; }
 
 .tool-card h3 {
   font-size: 1rem;
@@ -779,9 +819,12 @@ body.dark .bottom-item { color: #555; }
 body.dark .bottom-item.active,
 body.dark .bottom-item:hover { color: #6aaa7a; }
 
-body.dark .tab { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
-body.dark .tab:hover { background: #2a2a2a; }
+body.dark .tab { background: #1e1e1e; border-color: #3a3a3a; color: #aaa; }
+body.dark .tab:hover { background: #2a2a2a; color: #e8e8e8; }
 body.dark .tab.active { background: #4a7c59; border-color: #4a7c59; color: #fff; }
+body.dark .tab-step { background: #333; color: #777; }
+body.dark .tab:hover .tab-step { background: #444; color: #aaa; }
+body.dark .tab.active .tab-step { background: rgba(255,255,255,0.25); color: #fff; }
 
 body.dark .search-bar input { background: #1e1e1e; border-color: #444; color: #e8e8e8; }
 body.dark .search-bar input::placeholder { color: #666; }
@@ -845,13 +888,12 @@ body.dark .resource-card { background: #1e1e1e; box-shadow: 0 2px 10px rgba(0,0,
 body.dark .resource-card p { color: #aaa; }
 
 body.dark .section-header p { color: #aaa; }
+body.dark .step-badge { background: #182a1e; color: #6aaa7a; }
 body.dark .sub-desc { color: #888; }
 body.dark .empty-hint { color: #666; }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 640px) {
-  .tools-grid { grid-template-columns: 1fr; }
-  .tool-card-wide { grid-column: span 1; }
-  .tab { padding: 8px 12px; font-size: 0.82rem; }
+@media (max-width: 380px) {
+  .tab { padding: 7px 10px; font-size: 0.8rem; }
   .timer-display { font-size: 2.8rem; }
 }

@@ -23,17 +23,30 @@
 
     <!-- ===== TAB-NAVIGATION (Chronologisch) ===== -->
     <div class="tab-nav">
-      <button class="tab active" onclick="showTab('lernen')">📚 Lernen</button>
-      <button class="tab" onclick="showTab('wissen')">📖 Wissen</button>
-      <button class="tab" onclick="showTab('praxis')">🛠️ Praxis</button>
-      <button class="tab" onclick="showTab('akademisch')">✍️ Akademisch</button>
-      <button class="tab" onclick="showTab('ki')">🤖 KI</button>
-      <button class="tab" onclick="showTab('netzwerk')">🌐 Mehr</button>
+      <button class="tab active" onclick="showTab('lernen')">
+        <span class="tab-step">1</span>📚 Lernen
+      </button>
+      <button class="tab" onclick="showTab('wissen')">
+        <span class="tab-step">2</span>📖 Wissen
+      </button>
+      <button class="tab" onclick="showTab('praxis')">
+        <span class="tab-step">3</span>🛠️ Praxis
+      </button>
+      <button class="tab" onclick="showTab('akademisch')">
+        <span class="tab-step">4</span>✍️ Schreiben
+      </button>
+      <button class="tab" onclick="showTab('ki')">
+        <span class="tab-step">5</span>🤖 KI
+      </button>
+      <button class="tab" onclick="showTab('netzwerk')">
+        <span class="tab-step">6</span>🌐 Mehr
+      </button>
     </div>
 
     <!-- ===== 1. LERNEN (Einstieg in die Lernsession) ===== -->
     <div id="lernen-tab" class="tab-content active">
       <div class="section-header">
+        <div class="step-badge">Schritt 1 von 6</div>
         <h2>📚 Lernen & Üben</h2>
         <p>Starte deine Lernsession mit Karten, Quiz und Timer</p>
       </div>
@@ -107,6 +120,7 @@
     <!-- ===== 2. WISSEN (Bibliothek + Fallstudien) ===== -->
     <div id="wissen-tab" class="tab-content">
       <div class="section-header">
+        <div class="step-badge">Schritt 2 von 6</div>
         <h2>📖 Wissen aufbauen</h2>
         <p>Fachbibliothek und reale Fallstudien zur Sozialen Arbeit</p>
       </div>
@@ -142,6 +156,7 @@
     <!-- ===== 3. PRAXIS (Praktische Dokumentation) ===== -->
     <div id="praxis-tab" class="tab-content">
       <div class="section-header">
+        <div class="step-badge">Schritt 3 von 6</div>
         <h2>🛠️ Praxistools</h2>
         <p>Fallanalyse, Protokolle und Hilfepläne für die praktische Arbeit</p>
       </div>
@@ -230,6 +245,7 @@
     <!-- ===== 4. AKADEMISCH (Schreiben & Notenrechner) ===== -->
     <div id="akademisch-tab" class="tab-content">
       <div class="section-header">
+        <div class="step-badge">Schritt 4 von 6</div>
         <h2>✍️ Akademisches Arbeiten</h2>
         <p>Zitieren, Hausarbeiten schreiben, Texte verstehen und Noten berechnen</p>
       </div>
@@ -309,6 +325,7 @@
     <!-- ===== 5. KI-ASSISTENZ ===== -->
     <div id="ki-tab" class="tab-content">
       <div class="section-header">
+        <div class="step-badge">Schritt 5 von 6</div>
         <h2>🤖 KI-Assistenz</h2>
         <p>Falldiagnose und professionelle Formulierungen mit KI-Unterstützung</p>
       </div>
@@ -361,6 +378,7 @@
     <!-- ===== 6. NETZWERK & MEHR ===== -->
     <div id="netzwerk-tab" class="tab-content">
       <div class="section-header">
+        <div class="step-badge">Schritt 6 von 6</div>
         <h2>🌐 Netzwerk & Ressourcen</h2>
         <p>Studiengruppen, Mentoren und kostenlose Fachliteratur</p>
       </div>
