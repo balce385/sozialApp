@@ -80,8 +80,9 @@ function getCategoryName(category) {
 
 // Bibliothek filtern
 function filterLib(category) {
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.category === category);
+  });
   searchLibrary();
 }
 
@@ -458,7 +459,7 @@ function hilfeplanDrucken() {
   w.print();
 }
 
-// Eigene Lernkarte erstellen
+// Eigene Lernkarte erstellen (ohne Login)
 async function createFlashcard() {
   const question = document.getElementById('new-card-question').value.trim();
   const answer = document.getElementById('new-card-answer').value.trim();
@@ -470,17 +471,10 @@ async function createFlashcard() {
     return;
   }
 
-  const token = localStorage.getItem('token');
-  if (!token) {
-    msg.textContent = 'Bitte zuerst einloggen.';
-    msg.className = 'save-msg error';
-    return;
-  }
-
   try {
     const response = await fetch(`${API_URL}/research/flashcards`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question, answer })
     });
     const data = await response.json();
@@ -492,7 +486,7 @@ async function createFlashcard() {
     msg.className = 'save-msg success';
     setTimeout(() => { msg.textContent = ''; }, 3000);
 
-    await loadFlashcards(); // Karten neu laden
+    await loadFlashcards();
   } catch (err) {
     msg.textContent = 'Fehler: ' + err.message;
     msg.className = 'save-msg error';

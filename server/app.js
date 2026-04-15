@@ -23,6 +23,12 @@ app.use('/api/research', researchRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/gemini', geminiRoutes);
 
+// SPA Fallback – alle nicht-API GET-Anfragen → index.html
+const path = require('path');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+
 // Fehlerbehandlung
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,15 +1,18 @@
 // Service Worker – ermöglicht Offline-Nutzung und App-Installation
 
-const CACHE_NAME = 'sozialapp-v1';
+const CACHE_NAME = 'sozialapp-v2';
 const STATIC_ASSETS = [
-  '/client/index.html',
-  '/client/research.html',
-  '/client/style.css',
-  '/client/research.css',
-  '/client/app.js',
-  '/client/research.js',
-  '/client/config.js',
-  '/client/darkmode.js',
+  '/',
+  '/research.html',
+  '/style.css',
+  '/research.css',
+  '/research.js',
+  '/config.js',
+  '/darkmode.js',
+  '/manifest.json',
+  '/assets/icon.svg',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
 ];
 
 self.addEventListener('install', event => {

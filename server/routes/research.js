@@ -60,8 +60,8 @@ router.get('/flashcards', async (req, res) => {
   }
 });
 
-// Eigene Lernkarte erstellen
-router.post('/flashcards', auth, async (req, res) => {
+// Eigene Lernkarte erstellen (ohne Login – App ist öffentlich zugänglich)
+router.post('/flashcards', async (req, res) => {
   const { question, answer } = req.body;
   if (!question || !answer) {
     return res.status(400).json({ msg: 'Frage und Antwort erforderlich.' });
@@ -70,27 +70,10 @@ router.post('/flashcards', auth, async (req, res) => {
     const card = new Flashcard({
       question: question.trim(),
       answer: answer.trim(),
-      createdBy: req.user.id,
       isUserCreated: true
     });
     await card.save();
     res.status(201).json(card);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Serverfehler');
-  }
-});
-
-// Eigene Lernkarte löschen
-router.delete('/flashcards/:id', auth, async (req, res) => {
-  try {
-    const card = await Flashcard.findById(req.params.id);
-    if (!card) return res.status(404).json({ msg: 'Karte nicht gefunden.' });
-    if (!card.isUserCreated || card.createdBy.toString() !== req.user.id) {
-      return res.status(403).json({ msg: 'Keine Berechtigung.' });
-    }
-    await card.deleteOne();
-    res.json({ msg: 'Karte gelöscht.' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Serverfehler');
