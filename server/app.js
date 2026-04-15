@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const researchRoutes = require('./routes/research');
@@ -16,15 +17,17 @@ app.use(express.json());
 // Health-Check für Render (verhindert Cold-Start-Timeout)
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-// Routen
+// API-Routen
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/research', researchRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/gemini', geminiRoutes);
 
+// Statische Dateien (muss VOR dem SPA-Catch-all stehen)
+app.use(express.static(path.join(__dirname, '../client')));
+
 // SPA Fallback – alle nicht-API GET-Anfragen → index.html
-const path = require('path');
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });

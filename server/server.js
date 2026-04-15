@@ -6,9 +6,6 @@ const app = require('./app');
 const PORT = process.env.PORT || 5000;
 const HOST = '0.0.0.0';
 
-// Frontend-Dateien ausliefern (nur lokal relevant; auf Render kommt alles von IONOS)
-app.use(require('express').static(path.join(__dirname, '../client')));
-
 // Server ZUERST starten – unabhängig von der DB-Verbindung
 app.listen(PORT, HOST, () => {
   console.log(`Server läuft auf ${HOST}:${PORT}`);
