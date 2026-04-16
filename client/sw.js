@@ -1,6 +1,6 @@
 // Service Worker – ermöglicht Offline-Nutzung und App-Installation
 
-const CACHE_NAME = 'sozialapp-v3';
+const CACHE_NAME = 'sozialapp-v4';
 const STATIC_ASSETS = [
   '/',
   '/research.html',
