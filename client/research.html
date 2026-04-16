@@ -4,19 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lernen – sozial.app</title>
-  <meta name="theme-color" content="#4a7c59" />
+  <meta name="theme-color" content="#0b0f1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="sozial.app" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/icon.svg" />
-  <link rel="stylesheet" href="research.css?v=3" />
+  <link rel="stylesheet" href="research.css?v=4" />
 </head>
 <body>
 
-  <!-- ===== APP-HEADER ===== -->
-  <header class="app-header">
-    <a href="index.html" class="app-logo">sozial.app</a>
-    <button class="icon-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">sozial.app</a>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="research.html#lernen" onclick="showTab('lernen');return false;">Lernen</a>
+        <a href="research.html#praxis" onclick="showTab('praxis');return false;">Praxis</a>
+        <a href="research.html#ki" onclick="showTab('ki');return false;">KI-Tools</a>
+        <a href="research.html#netzwerk" onclick="showTab('netzwerk');return false;">Netzwerk</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn nav-dark-btn" id="dark-toggle" onclick="toggleDarkMode()" aria-label="Darkmode">🌙</button>
+      </div>
+      <button class="nav-menu-btn" onclick="toggleMobileMenu()" aria-label="Menü">☰</button>
+    </div>
+    <div class="nav-mobile-menu" id="mobile-menu">
+      <a href="#" onclick="showTab('lernen');toggleMobileMenu();return false;">📚 Lernen</a>
+      <a href="#" onclick="showTab('praxis');toggleMobileMenu();return false;">🛠️ Praxis</a>
+      <a href="#" onclick="showTab('ki');toggleMobileMenu();return false;">🤖 KI-Tools</a>
+      <a href="#" onclick="showTab('netzwerk');toggleMobileMenu();return false;">🌐 Netzwerk</a>
+    </div>
   </header>
 
   <div class="research-layout">
@@ -405,22 +422,22 @@
   </div>
 
   <!-- ===== BOTTOM-NAVIGATION ===== -->
-  <nav class="bottom-nav">
+  <nav class="bottom-nav" aria-label="Mobile Navigation">
     <a href="index.html" class="bottom-item">
       <span class="bottom-icon">🏠</span>
       <span class="bottom-label">Start</span>
     </a>
-    <a href="research.html" class="bottom-item active">
+    <a href="#" class="bottom-item active" onclick="showTab('lernen');return false;">
       <span class="bottom-icon">📚</span>
       <span class="bottom-label">Lernen</span>
     </a>
-    <a href="#" class="bottom-item" onclick="showTab('netzwerk');return false;">
-      <span class="bottom-icon">🤝</span>
-      <span class="bottom-label">Netzwerk</span>
+    <a href="#" class="bottom-item" onclick="showTab('praxis');return false;">
+      <span class="bottom-icon">🛠️</span>
+      <span class="bottom-label">Praxis</span>
     </a>
-    <a href="#" class="bottom-item" onclick="showTab('netzwerk');return false;">
-      <span class="bottom-icon">🔗</span>
-      <span class="bottom-label">Links</span>
+    <a href="#" class="bottom-item" onclick="showTab('ki');return false;">
+      <span class="bottom-icon">🤖</span>
+      <span class="bottom-label">KI</span>
     </a>
   </nav>
 
@@ -430,6 +447,9 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
     }
   </script>
 </body>

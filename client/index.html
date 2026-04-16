@@ -3,98 +3,241 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sozial.app</title>
-  <meta name="theme-color" content="#4a7c59" />
+  <title>sozial.app – Dein Begleiter für Soziale Arbeit</title>
+  <meta name="theme-color" content="#0b0f1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="sozial.app" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/icon.svg" />
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
-  <!-- ===== APP-HEADER ===== -->
-  <header class="app-header">
-    <span class="app-logo">sozial.app</span>
-    <button class="icon-btn" id="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <span class="nav-logo">sozial.app</span>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="research.html#lernen">Lernen</a>
+        <a href="research.html#praxis">Praxis</a>
+        <a href="research.html#ki">KI-Tools</a>
+        <a href="research.html#netzwerk">Netzwerk</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="research.html" class="nav-cta">Jetzt starten</a>
+        <button class="icon-btn nav-dark-btn" id="dark-toggle" onclick="toggleDarkMode()" aria-label="Darkmode">🌙</button>
+      </div>
+      <button class="nav-menu-btn" onclick="toggleMobileMenu()" aria-label="Menü">☰</button>
+    </div>
+    <div class="nav-mobile-menu" id="mobile-menu">
+      <a href="research.html#lernen">Lernen</a>
+      <a href="research.html#praxis">Praxis</a>
+      <a href="research.html#ki">KI-Tools</a>
+      <a href="research.html#netzwerk">Netzwerk</a>
+      <a href="research.html" class="nav-cta-mobile">Jetzt starten →</a>
+    </div>
   </header>
 
-  <!-- ===== HAUPTINHALT ===== -->
-  <main class="app-main">
-
-    <!-- Hero -->
-    <div class="hero-section">
-      <div class="hero-icon">🎓</div>
-      <h2 class="hero-title">Lernen & Forschen</h2>
-      <p class="hero-sub">Dein digitaler Begleiter für Soziale Arbeit</p>
+  <!-- ===== HERO ===== -->
+  <section class="hero-section">
+    <div class="section-inner hero-inner">
+      <div class="hero-text">
+        <span class="hero-badge">🎓 Für Studierende der Sozialen Arbeit</span>
+        <h1 class="hero-title">Alle Werkzeuge für dein Studium – an einem Ort</h1>
+        <p class="hero-sub">Lernkarten, KI-Assistenz, Fallanalyse, Bibliothek und Praxis-Tools. Kostenlos und ohne Account.</p>
+        <div class="hero-actions">
+          <a href="research.html" class="btn-primary">Jetzt starten →</a>
+          <a href="research.html#wissen" class="btn-ghost">Bibliothek ansehen</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-grid">
+          <a href="research.html#lernen" class="hero-mini-card hmc-green">
+            <span class="hmc-icon">📚</span>
+            <span class="hmc-title">Lernkarten</span>
+            <span class="hmc-sub">Fragen & Antworten</span>
+          </a>
+          <a href="research.html#ki" class="hero-mini-card hmc-purple">
+            <span class="hmc-icon">🤖</span>
+            <span class="hmc-title">KI-Diagnose</span>
+            <span class="hmc-sub">Fallanalyse</span>
+          </a>
+          <a href="research.html#praxis" class="hero-mini-card hmc-orange">
+            <span class="hmc-icon">📝</span>
+            <span class="hmc-title">Protokoll</span>
+            <span class="hmc-sub">Gesprächsnotizen</span>
+          </a>
+          <a href="research.html#wissen" class="hero-mini-card hmc-blue">
+            <span class="hmc-icon">📖</span>
+            <span class="hmc-title">Bibliothek</span>
+            <span class="hmc-sub">Fachliteratur</span>
+          </a>
+          <a href="research.html#akademisch" class="hero-mini-card hmc-teal">
+            <span class="hmc-icon">✍️</span>
+            <span class="hmc-title">Hausarbeit</span>
+            <span class="hmc-sub">KI-Assistent</span>
+          </a>
+          <a href="research.html#praxis" class="hero-mini-card hmc-red">
+            <span class="hmc-icon">📋</span>
+            <span class="hmc-title">Hilfeplan</span>
+            <span class="hmc-sub">§ 36 SGB VIII</span>
+          </a>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Feature-Karten -->
-    <div class="feature-grid">
-      <a href="research.html#lernen" class="feature-card feature-green">
-        <span class="feat-icon">📚</span>
-        <span class="feat-title">Lernen</span>
-        <span class="feat-desc">Lernkarten & Quiz</span>
-      </a>
-      <a href="research.html#wissen" class="feature-card feature-blue">
-        <span class="feat-icon">📖</span>
-        <span class="feat-title">Wissen</span>
-        <span class="feat-desc">Bibliothek & Fälle</span>
-      </a>
-      <a href="research.html#praxis" class="feature-card feature-orange">
-        <span class="feat-icon">🛠️</span>
-        <span class="feat-title">Praxis</span>
-        <span class="feat-desc">Protokoll & Hilfeplan</span>
-      </a>
-      <a href="research.html#akademisch" class="feature-card feature-purple">
-        <span class="feat-icon">✍️</span>
-        <span class="feat-title">Akademisch</span>
-        <span class="feat-desc">APA-Zitat & Hausarbeit</span>
-      </a>
-      <a href="research.html#ki" class="feature-card feature-teal">
-        <span class="feat-icon">🤖</span>
-        <span class="feat-title">KI-Assistenz</span>
-        <span class="feat-desc">Diagnose & Formulierung</span>
-      </a>
-      <a href="research.html#netzwerk" class="feature-card feature-rose">
-        <span class="feat-icon">🤝</span>
-        <span class="feat-title">Netzwerk</span>
-        <span class="feat-desc">Gruppen & Mentoren</span>
-      </a>
-    </div>
-
-    <!-- Schnellzugriff -->
-    <div class="quick-section">
-      <h3 class="section-label">Schnellzugriff</h3>
-      <div class="quick-list">
-        <a href="research.html#lernen" class="quick-item">
-          <span class="quick-icon">⏱️</span>
-          <span>Pomodoro-Timer starten</span>
-          <span class="quick-arrow">›</span>
+  <!-- ===== TOOLS SECTION (white) ===== -->
+  <section class="tools-section">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">Alle Funktionen</p>
+        <h2 class="section-title">Was sozial.app bietet</h2>
+        <p class="section-sub">Sechs chronologische Bereiche für jeden Schritt deines Studiums</p>
+      </div>
+      <div class="tools-grid">
+        <a href="research.html#lernen" class="tool-card">
+          <div class="tool-num">01</div>
+          <div class="tool-icon">📚</div>
+          <h3>Lernen & Üben</h3>
+          <p>Lernkarten mit Quiz-Modus, eigene Karten erstellen und Pomodoro-Timer für konzentrierte Lernsessions</p>
         </a>
-        <a href="research.html#praxis" class="quick-item">
-          <span class="quick-icon">📝</span>
-          <span>Gesprächsprotokoll erstellen</span>
-          <span class="quick-arrow">›</span>
+        <a href="research.html#wissen" class="tool-card">
+          <div class="tool-num">02</div>
+          <div class="tool-icon">📖</div>
+          <h3>Bibliothek & Fälle</h3>
+          <p>Kuratierte Fachbücher, filterbar nach Kategorie, und reale Fallstudien aus der Sozialen Arbeit</p>
         </a>
-        <a href="research.html#akademisch" class="quick-item">
-          <span class="quick-icon">🎓</span>
-          <span>Noten berechnen</span>
-          <span class="quick-arrow">›</span>
+        <a href="research.html#praxis" class="tool-card">
+          <div class="tool-num">03</div>
+          <div class="tool-icon">🛠️</div>
+          <h3>Praxis-Werkzeuge</h3>
+          <p>Fallanalyse, Gesprächsprotokoll und Hilfeplan nach § 36 SGB VIII – ausdruckbar und professionell</p>
         </a>
-        <a href="research.html#netzwerk" class="quick-item">
-          <span class="quick-icon">🔗</span>
-          <span>Freie Ressourcen & Links</span>
-          <span class="quick-arrow">›</span>
+        <a href="research.html#akademisch" class="tool-card">
+          <div class="tool-num">04</div>
+          <div class="tool-icon">✍️</div>
+          <h3>Akademisches Schreiben</h3>
+          <p>APA-Zitationsgenerator, KI-Hausarbeitsassistent, Fachtext-Vereinfacher und Notenrechner</p>
+        </a>
+        <a href="research.html#ki" class="tool-card">
+          <div class="tool-num">05</div>
+          <div class="tool-icon">🤖</div>
+          <h3>KI-Assistenz</h3>
+          <p>KI-gestützte Falldiagnose mit Interventionsempfehlungen und Formulierungshilfe für Fachtexte</p>
+        </a>
+        <a href="research.html#netzwerk" class="tool-card">
+          <div class="tool-num">06</div>
+          <div class="tool-icon">🌐</div>
+          <h3>Netzwerk & Links</h3>
+          <p>Studiengruppen, Mentoren und kuratierte Ressourcen: Gesetze, Statistiken, Fachliteratur gratis</p>
         </a>
       </div>
     </div>
+  </section>
 
-  </main>
+  <!-- ===== WHY SECTION (dark) ===== -->
+  <section class="why-section">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2 class="section-title-light">Warum sozial.app nutzen?</h2>
+        <p class="section-sub-light">Entwickelt mit Fokus auf den Studienverlauf der Sozialen Arbeit in Deutschland</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon">🎯</div>
+          <h3>Praxis-nah</h3>
+          <p>Werkzeuge direkt aus dem Arbeitsalltag der Sozialen Arbeit – von der Fallanalyse bis zum Hilfeplan</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <h3>Sofort einsatzbereit</h3>
+          <p>Kein Login, kein Account. Öffne die App und starte direkt mit deiner Lernsession oder Fallarbeit</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🤖</div>
+          <h3>KI-unterstützt</h3>
+          <p>Mehrere KI-Modelle als Backup – die Assistenz funktioniert auch dann, wenn ein Dienst nicht erreichbar ist</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- ===== BOTTOM-NAVIGATION ===== -->
-  <nav class="bottom-nav">
+  <!-- ===== HOW IT WORKS (lavender) ===== -->
+  <section class="how-section">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">In 3 Schritten</p>
+        <h2 class="section-title">So funktioniert sozial.app</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Bereich wählen</h3>
+          <p>Wähle aus 6 chronologischen Bereichen – vom ersten Lernen bis zur Netzwerkbildung im Studium</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Werkzeug nutzen</h3>
+          <p>Starte Lernkarten, analysiere einen Fall, erstelle ein Protokoll oder nutze die KI-Assistenz</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Wissen exportieren</h3>
+          <p>Drucke Protokolle und Hilfepläne, kopiere KI-Texte oder speichere Ressourcen-Links</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION (dark) ===== -->
+  <section class="cta-section">
+    <div class="section-inner cta-inner">
+      <h2 class="cta-title">Starte jetzt – kostenlos & ohne Account</h2>
+      <p class="cta-sub">Alle 20+ Werkzeuge sofort verfügbar. Für Studierende der Sozialen Arbeit in Deutschland.</p>
+      <a href="research.html" class="btn-primary btn-large">Alle Tools öffnen →</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="app-footer">
+    <div class="section-inner footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">sozial.app</span>
+        <p>Dein digitaler Begleiter für das Studium der Sozialen Arbeit in Deutschland</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Lernen</h4>
+          <a href="research.html#lernen">Lernkarten</a>
+          <a href="research.html#lernen">Quiz-Modus</a>
+          <a href="research.html#lernen">Pomodoro-Timer</a>
+        </div>
+        <div class="footer-col">
+          <h4>Praxis</h4>
+          <a href="research.html#praxis">Fallanalyse</a>
+          <a href="research.html#praxis">Gesprächsprotokoll</a>
+          <a href="research.html#praxis">Hilfeplan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Mehr</h4>
+          <a href="research.html#akademisch">Zitationsgenerator</a>
+          <a href="research.html#ki">KI-Assistenz</a>
+          <a href="research.html#netzwerk">Ressourcen</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="section-inner footer-bottom-inner">
+        <span>© 2025 sozial.app</span>
+        <span>Für Studierende der Sozialen Arbeit</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MOBILE BOTTOM NAV ===== -->
+  <nav class="bottom-nav" aria-label="Mobile Navigation">
     <a href="index.html" class="bottom-item active">
       <span class="bottom-icon">🏠</span>
       <span class="bottom-label">Start</span>
@@ -103,13 +246,13 @@
       <span class="bottom-icon">📚</span>
       <span class="bottom-label">Lernen</span>
     </a>
-    <a href="research.html#netzwerk" class="bottom-item">
-      <span class="bottom-icon">🤝</span>
-      <span class="bottom-label">Netzwerk</span>
+    <a href="research.html#praxis" class="bottom-item">
+      <span class="bottom-icon">🛠️</span>
+      <span class="bottom-label">Praxis</span>
     </a>
-    <a href="research.html#netzwerk" class="bottom-item">
-      <span class="bottom-icon">🔗</span>
-      <span class="bottom-label">Links</span>
+    <a href="research.html#ki" class="bottom-item">
+      <span class="bottom-icon">🤖</span>
+      <span class="bottom-label">KI</span>
     </a>
   </nav>
 
@@ -118,6 +261,9 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
     }
   </script>
 </body>
